@@ -10,13 +10,11 @@ namespace Bff.Controllers.Requests.User
         /// <summary>
         /// User`s email
         /// </summary>
-        [Required]
-        public string? Email { get; set; }
+        public required string Email { get; set; }
 
         /// <summary>
         /// User`s Password
         /// </summary>
-        [Required]
-        public string? Password { get; set; }
+        public required string Password { get; set; }
     }
 }

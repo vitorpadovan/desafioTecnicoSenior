@@ -1,4 +1,5 @@
 ﻿
+using AutoMapper;
 using Bff.Controllers.Requests.User;
 using Bff.Controllers.Response.User;
 using Challenge.Domain.Business;
@@ -15,6 +16,7 @@ namespace Bff.Controllers
     public class UserController : AppBaseController<UserController>
     {
         private readonly IUserBusiness _userBusiness;
+        private readonly IMapper _mapper;
         public UserController(ILogger<UserController> logger, IUserBusiness userBusiness) : base(logger)
         {
             _userBusiness = userBusiness;
@@ -24,9 +26,9 @@ namespace Bff.Controllers
         [HttpPost]
         [Route("create-admin")]
         [AllowAnonymous]
-        public async Task<IActionResult> CreateAdminUser()
+        public async Task<IActionResult> CreateAdminUser([FromBody] NewUserRegisterRequest login)
         {
-            await _userBusiness.CreateAdminUser();
+            await _userBusiness.CreateAdminUser(login.Email, login.Password);
             return Created();
         }
 
@@ -63,7 +65,8 @@ namespace Bff.Controllers
         [Authorize(Roles = nameof(UserProfiles.ADMINISTRATOR))]
         public async Task<IActionResult> SingUp([FromBody] NewUserRegisterRequest login)
         {
-            UserCreatedResponse response = await _userBusiness.CreateUser(login.Email, login.Email, login.Password);
+            var response = await _userBusiness.CreateUser(login.Email!, login.Email!, login.Password!);
+            var @return = _mapper.Map<UserCreatedResponse>(response);
             return Created(string.Empty, response);
         }
     }

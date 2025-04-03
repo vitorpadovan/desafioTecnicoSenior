@@ -3,6 +3,7 @@ using Challenge.Domain.Business;
 using Challenge.Domain.Service;
 using Challenge.Domain.Enums;
 using Challenge.Domain.Extension;
+using Challenge.Domain.Exceptions;
 
 namespace Challenge.Application.Business
 {
@@ -22,10 +23,17 @@ namespace Challenge.Application.Business
         }
 
         //TODO trocar essa estratégia para melhor atender
-        public async Task CreateAdminUser()
+        public async Task CreateAdminUser(string email, string password)
         {
-            var email = "admin@admin.com.br";
             var result = await _userManager.FindByEmailAsync(email);
+            if(result != null)
+                throw new BusinessException("Usuário já cadastrado");
+            var usersInRole = await _userManager.GetUsersInRoleAsync(UserProfiles.ADMINISTRATOR.ToString());
+            if(usersInRole.Count > 0)
+            {
+                var usuarios = usersInRole.Select(x => x.UserName).ToList();
+                throw new BusinessException($"Usuários {String.Join(",",usuarios)} já cadastrados como administrador");
+            }   
             string role = await CreateRole(UserProfiles.ADMINISTRATOR);
             role = await CreateRole(UserProfiles.COMMONUSER);
             role = await CreateRole(UserProfiles.RESELLER);
@@ -34,15 +42,9 @@ namespace Challenge.Application.Business
             {
                 Email = email,
                 UserName = email,
-                PasswordHash = "123".HashPassword(),
+                PasswordHash = password.HashPassword(),
                 EmailConfirmed = true,
             };
-            if (result != null)
-            {
-                await AssociateAdminRoles(user);
-                //TODO colocar exception
-                //throw new BusinessException("Usuário já cadastrado");
-            }
             var createdUser = await _userManager.CreateAsync(user);
             await AssociateAdminRoles(user);
         }

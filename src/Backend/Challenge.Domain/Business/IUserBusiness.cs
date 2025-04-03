@@ -11,6 +11,6 @@ namespace Challenge.Domain.Business
         public Task<IdentityUser> CreateUser(string email, string user, string password);
         public Task<IdentityUser> Login(string email, string user, string password);
         public Task<string> GetToken(IdentityUser user);
-        Task CreateAdminUser();
+        Task CreateAdminUser(string email, string password);
     }
 }
