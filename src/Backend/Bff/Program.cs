@@ -20,7 +20,16 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(
         builder.Configuration.GetConnectionString("PostgresSqlConnectionString"),
-        b => b.MigrationsAssembly("Challenge.Orm")
+        plSqlOpt =>
+        {
+            plSqlOpt.MigrationsAssembly("Challenge.Orm");
+            plSqlOpt.CommandTimeout(60);
+            plSqlOpt.EnableRetryOnFailure(
+                maxRetryCount: 5,
+                maxRetryDelay: TimeSpan.FromSeconds(30),
+                errorCodesToAdd: null
+            );
+        }
     )
 );
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
