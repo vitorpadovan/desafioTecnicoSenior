@@ -1,8 +1,12 @@
+using Bff.Extensions;
 using Challenge.Application.Business;
+using Challenge.Application.Services;
 using Challenge.Domain.Business;
 using Challenge.Domain.Repositories;
+using Challenge.Domain.Service;
 using Challenge.Orm;
 using Challenge.Orm.Repositories;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -32,10 +36,36 @@ builder.Services.AddDbContext<AppDbContext>(options =>
         }
     )
 );
+
+builder.Services.AddDefaultIdentity<IdentityUser>(opt =>
+    {
+        // Password settings.
+        opt.Password.RequireDigit = true;
+        opt.Password.RequireLowercase = true;
+        opt.Password.RequireNonAlphanumeric = true;
+        opt.Password.RequireUppercase = true;
+        opt.Password.RequiredLength = 5;
+        opt.Password.RequiredUniqueChars = 1;
+
+        // Lockout settings.
+        opt.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+        opt.Lockout.MaxFailedAccessAttempts = 5;
+        opt.Lockout.AllowedForNewUsers = true;
+
+        // User settings.
+        opt.User.AllowedUserNameCharacters =
+        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+#!";
+        opt.User.RequireUniqueEmail = true;
+
+        // SignIn settings.
+        opt.SignIn.RequireConfirmedAccount = true;
+        opt.SignIn.RequireConfirmedEmail = true;
+    })
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<AppDbContext>();
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
-builder.Services.AddScoped<IResellerBusiness, ResellerBusiness>();
-builder.Services.AddScoped<IResellerRepository, ResellerRepository>();
+builder.Services.AddDependencyInjections();
 
 var app = builder.Build();
 
@@ -47,7 +77,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
+
 
 app.MapControllers();
 app.UseSwagger();
