@@ -5,9 +5,9 @@ using Challenge.Domain.Entities;
 
 namespace Bff.Mapping
 {
-    public class NewResellerRequestProfile : Profile
+    public class ResellerProfile : Profile
     {
-        public NewResellerRequestProfile()
+        public ResellerProfile()
         {
             CreateMap<NewResellerRequest, Reseller>();
             CreateMap<Reseller, NewResellerRequest>();
