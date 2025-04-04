@@ -30,4 +30,4 @@ services:
       - '8080:8080'
     environment:
       - 'ASPNETCORE_ENVIRONMENT=Development'
-      - 'ConnectionStrings__DefaultConnection=Host=postgrechalangesrv;Port=5432;Username=challenge;Password=Senh@123;Database=challenge;Pooling=true;'
+      - 'ConnectionStrings__PostgresSqlConnectionString=Host=postgrechalangesrv;Port=5432;Username=challenge;Password=Senh@123;Database=challenge;Pooling=true;'
