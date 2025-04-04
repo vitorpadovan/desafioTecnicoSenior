@@ -7,16 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Bff.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
     public class ResellerController : AppBaseController<ResellerController>
     {
-        private readonly IMapper _mapper;
         private readonly IResellerBusiness _resellerBusiness;
-        public ResellerController(ILogger<ResellerController> logger, IResellerBusiness resellerBusiness, IMapper mapper) : base(logger)
+        public ResellerController(ILogger<ResellerController> logger, IResellerBusiness resellerBusiness, IMapper mapper) : base(logger, mapper)
         {
             _resellerBusiness = resellerBusiness;
-            _mapper = mapper;
         }
 
         [HttpPost]

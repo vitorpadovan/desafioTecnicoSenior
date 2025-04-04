@@ -11,13 +11,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Bff.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
     public class UserController : AppBaseController<UserController>
     {
         private readonly IUserBusiness _userBusiness;
         private readonly IMapper _mapper;
-        public UserController(ILogger<UserController> logger, IUserBusiness userBusiness, IMapper mapper) : base(logger)
+        public UserController(ILogger<UserController> logger, IUserBusiness userBusiness, IMapper mapper) : base(logger, mapper)
         {
             _userBusiness = userBusiness;
             _mapper = mapper;
