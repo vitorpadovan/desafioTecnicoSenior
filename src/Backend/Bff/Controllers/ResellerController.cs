@@ -18,10 +18,6 @@ namespace Bff.Controllers
         [HttpPost]
         public async Task<IActionResult> Index([FromBody] NewResellerRequest request)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
             var reseller = _mapper.Map<Reseller>(request);
             var response = await _resellerBusiness.SaveResellerAsync(reseller);
             var responseDto = _mapper.Map<ResellerResponse>(response);

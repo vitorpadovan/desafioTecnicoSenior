@@ -19,6 +19,11 @@ namespace Challenge.Orm.Repositories
                 .FirstAsync();
         }
 
+        public Task<Reseller> GetResellerByIdAsync(Guid id)
+        {
+            return _dbSet.Where(x => x.Id == id).FirstAsync();
+        }
+
         public async Task<Reseller> SaveResellerAsync(Reseller reseller)
         {
             var @return = await _dbSet.AddAsync(reseller);

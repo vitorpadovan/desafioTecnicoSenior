@@ -22,13 +22,13 @@ namespace Challenge.Application.Business
             _roleManager = roleManager;
         }
 
-        //TODO trocar essa estratégia para melhor atender
+        //TODO adicionar inicialização de roles no startup
         public async Task CreateAdminUserAsync(string email, string password)
         {
             var result = await _userManager.FindByEmailAsync(email);
-            if (result != null)
-                throw new BusinessException("Usuário já cadastrado");
             var usersInRole = await _userManager.GetUsersInRoleAsync(UserProfiles.ADMINISTRATOR.ToString());
+            if (result != null && usersInRole.Count>0)
+                throw new BusinessException("Usuário já cadastrado");
             if (usersInRole.Count > 0)
             {
                 var usuarios = usersInRole.Select(x => x.UserName).ToList();
@@ -97,7 +97,7 @@ namespace Challenge.Application.Business
                 EmailConfirmed = true,
             };
             var resultCreat = await _userManager.CreateAsync(user);
-            var role = UserProfiles.COMMONUSER.ToString();
+            var role = UserProfiles.CLIENT.ToString();
             var resultAssociate = await _userManager.AddToRolesAsync(user, [role]);
             var resultedUser = await _userManager.FindByEmailAsync(user.Email);
             return resultedUser;

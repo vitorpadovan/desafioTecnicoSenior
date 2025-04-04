@@ -9,10 +9,10 @@ namespace Challenge.Orm.Mapping
         protected override void ConfigureChild(EntityTypeBuilder<Address> builder)
         {
             builder.HasKey(x => x.Id);
-            builder.HasOne(a => a.Reseller) // Configura a relação com Reseller
-                   .WithMany(r => r.Addresses)     // Define a relação inversa
-                   .HasPrincipalKey(r => r.Document) // Define a chave primária do Reseller
-                   .OnDelete(DeleteBehavior.Cascade); // Adiciona comportamento de exclusão em cascata
+            builder.HasOne(a => a.Reseller)
+                   .WithMany(r => r.Addresses)
+                   .HasPrincipalKey(r => r.Document)
+                   .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

@@ -21,13 +21,15 @@ namespace Challenge.Domain.Entities
         [Column("email")]
         public required string Email { get; set; }
 
-        public List<Contact> Contacts { get; set; } = new();
+        public List<Contact> Contacts { get; set; } = [];
 
-        public required List<Address> Addresses { get; set; } = new();
+        public required List<Address> Addresses { get; set; } = [];
 
         public EntityState State { get; set; }
 
-        public List<ResellerUsers> ResellerUsers { get; set; } = new();
+        public List<ResellerUsers> ResellerUsers { get; set; } = [];
+
+        public List<Product> Products { get; set; } = [];
 
         public override string? ToString()
         {
