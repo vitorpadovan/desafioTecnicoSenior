@@ -23,7 +23,7 @@ namespace Challenge.Application.Business
         }
 
         //TODO trocar essa estratégia para melhor atender
-        public async Task CreateAdminUser(string email, string password)
+        public async Task CreateAdminUserAsync(string email, string password)
         {
             var result = await _userManager.FindByEmailAsync(email);
             if(result != null)
@@ -71,7 +71,7 @@ namespace Challenge.Application.Business
             }
         }
 
-        public async Task<bool> CreateUser(string email, string userName, string password, List<UserProfiles> profiles)
+        public async Task<bool> CreateUserAsync(string email, string userName, string password, List<UserProfiles> profiles)
         {
             var user = new IdentityUser()
             {
@@ -87,7 +87,7 @@ namespace Challenge.Application.Business
             return result.Succeeded;
         }
 
-        public async Task<IdentityUser> CreateUser(string email, string userName, string password)
+        public async Task<IdentityUser> CreateUserAsync(string email, string userName, string password)
         {
             var user = new IdentityUser()
             {
@@ -103,13 +103,13 @@ namespace Challenge.Application.Business
             return resultedUser;
         }
 
-        public async Task<string> GetToken(IdentityUser user)
+        public async Task<string> GetTokenAsync(IdentityUser user)
         {
             var claims = await _signInManager.ClaimsFactory.CreateAsync(user);
             return _tokenService.GenerateToken(user, claims);
         }
 
-        public async Task<IdentityUser> Login(string email, string userName, string password)
+        public async Task<IdentityUser> LoginAsync(string email, string userName, string password)
         {
             var user = new IdentityUser()
             {
@@ -126,7 +126,7 @@ namespace Challenge.Application.Business
             return @return;
         }
 
-        public async Task<bool> AddRole(IdentityUser user, UserProfiles profile)
+        public async Task<bool> AddRoleAsync(IdentityUser user, UserProfiles profile)
         {
             var result = await _userManager.AddToRoleAsync(user, profile.ToString());
             if (result.Succeeded)
@@ -135,10 +135,10 @@ namespace Challenge.Application.Business
                 throw new Exception(@$"Erro ao tentar adicionar role para o usuário {user.Email} 
 com a mensagem: {String.Join(", ", result.Errors.Select(x => x.Description))}");
         }
-        public async Task<bool> AddRole(string id, UserProfiles profile)
+        public async Task<bool> AddRoleAsync(string id, UserProfiles profile)
         {
             var user = await _userManager.FindByIdAsync(id);
-            return await AddRole(user, profile);
+            return await AddRoleAsync(user, profile);
         }
     }
 }

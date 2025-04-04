@@ -5,12 +5,12 @@ namespace Challenge.Domain.Business
 {
     public interface IUserBusiness
     {
-        public Task<bool> AddRole(IdentityUser user, UserProfiles profile);
-        public Task<bool> AddRole(String id, UserProfiles profile);
-        public Task<bool> CreateUser(string email, string user, string password, List<UserProfiles> profiles);
-        public Task<IdentityUser> CreateUser(string email, string user, string password);
-        public Task<IdentityUser> Login(string email, string user, string password);
-        public Task<string> GetToken(IdentityUser user);
-        Task CreateAdminUser(string email, string password);
+        public Task<bool> AddRoleAsync(IdentityUser user, UserProfiles profile);
+        public Task<bool> AddRoleAsync(String id, UserProfiles profile);
+        public Task<bool> CreateUserAsync(string email, string user, string password, List<UserProfiles> profiles);
+        public Task<IdentityUser> CreateUserAsync(string email, string user, string password);
+        public Task<IdentityUser> LoginAsync(string email, string user, string password);
+        public Task<string> GetTokenAsync(IdentityUser user);
+        public Task CreateAdminUserAsync(string email, string password);
     }
 }

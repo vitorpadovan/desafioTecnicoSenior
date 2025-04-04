@@ -1,5 +1,6 @@
 ﻿using Challenge.Domain.Business;
 using Challenge.Domain.Entities;
+using Challenge.Domain.Extension;
 using Challenge.Domain.Repositories;
 using Microsoft.Extensions.Logging;
 
@@ -9,11 +10,13 @@ namespace Challenge.Application.Business
     {
         private readonly ILogger<ResellerBusiness> _logger;
         private readonly IResellerRepository _resellerRepository;
+        private readonly IUserBusiness _userBusiness;
 
-        public ResellerBusiness(ILogger<ResellerBusiness> logger,IResellerRepository resellerRepository)
+        public ResellerBusiness(ILogger<ResellerBusiness> logger, IResellerRepository resellerRepository, IUserBusiness userBusiness)
         {
-            _resellerRepository = resellerRepository;
             _logger = logger;
+            _resellerRepository = resellerRepository;
+            _userBusiness = userBusiness;
         }
 
         public Task<Reseller> GetResellerAsync(Guid id)
@@ -21,10 +24,15 @@ namespace Challenge.Application.Business
             return _resellerRepository.GetResellerAsync(id);
         }
 
-        public Task<Reseller> SaveResellerAsync(Reseller reseller)
+        public async Task<Reseller> SaveResellerAsync(Reseller reseller)
         {
             reseller.State = Domain.Enums.EntityState.Saved;
-            return _resellerRepository.SaveResellerAsync(reseller);
+            var @return = await _resellerRepository.SaveResellerAsync(reseller);
+
+            //TODO adicionar criação de senha para fornecedores
+            await _userBusiness.CreateUserAsync(@return.Email, @return.Email, String.Empty.GeneratePassword());
+            this._logger.LogDebug("Salvo no banco a revenda {revenda}", @return);
+            return @return;
         }
     }
 }

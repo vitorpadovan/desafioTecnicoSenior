@@ -4,6 +4,10 @@ namespace Challenge.Domain.Extension
 {
     public static class PasswordExtension
     {
+        public static string GeneratePassword(this string password)
+        {
+            return "asdasd";
+        }
         public static string HashPassword(this string password)
         {
             byte[] salt;

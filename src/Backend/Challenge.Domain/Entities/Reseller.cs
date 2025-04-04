@@ -1,5 +1,6 @@
 ﻿using Challenge.Domain.Enums;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json;
 
 namespace Challenge.Domain.Entities
 {
@@ -20,10 +21,25 @@ namespace Challenge.Domain.Entities
         [Column("email")]
         public required string Email { get; set; }
 
-        public List<Contact> Contacts { get; set; } = new(); // Relação com Contact
+        public List<Contact> Contacts { get; set; } = new();
 
-        public required List<Address> Addresses { get; set; } = new(); // Relação com Address
+        public required List<Address> Addresses { get; set; } = new();
 
         public EntityState State { get; set; }
+
+        public List<ResellerUsers> ResellerUsers { get; set; } = new();
+
+        public override string? ToString()
+        {
+            return JsonSerializer.Serialize(new
+            {
+                this.Id,
+                this.Document,
+                this.TradeName,
+                this.RegistredName,
+                this.Email,
+                this.State
+            });
+        }
     }
 }

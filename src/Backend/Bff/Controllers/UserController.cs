@@ -17,9 +17,10 @@ namespace Bff.Controllers
     {
         private readonly IUserBusiness _userBusiness;
         private readonly IMapper _mapper;
-        public UserController(ILogger<UserController> logger, IUserBusiness userBusiness) : base(logger)
+        public UserController(ILogger<UserController> logger, IUserBusiness userBusiness, IMapper mapper) : base(logger)
         {
             _userBusiness = userBusiness;
+            _mapper = mapper;
         }
 
         //TODO create admin deve ser diferente
@@ -28,7 +29,7 @@ namespace Bff.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> CreateAdminUser([FromBody] NewUserRegisterRequest login)
         {
-            await _userBusiness.CreateAdminUser(login.Email, login.Password);
+            await _userBusiness.CreateAdminUserAsync(login.Email, login.Password);
             return Created();
         }
 
@@ -42,10 +43,10 @@ namespace Bff.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody] LoginRequest login)
         {
-            var user = await _userBusiness.Login(login.Email!, login.Email!, login.Password!);
+            var user = await _userBusiness.LoginAsync(login.Email!, login.Email!, login.Password!);
             if (user == null)
                 return Unauthorized();
-            var token = await _userBusiness.GetToken(user);
+            var token = await _userBusiness.GetTokenAsync(user);
             AccessTokenResponse? response = new()
             {
                 AccessToken = token,
@@ -65,7 +66,7 @@ namespace Bff.Controllers
         [Authorize(Roles = nameof(UserProfiles.ADMINISTRATOR))]
         public async Task<IActionResult> SingUp([FromBody] NewUserRegisterRequest login)
         {
-            var response = await _userBusiness.CreateUser(login.Email!, login.Email!, login.Password!);
+            var response = await _userBusiness.CreateUserAsync(login.Email!, login.Email!, login.Password!);
             var @return = _mapper.Map<UserCreatedResponse>(response);
             return Created(string.Empty, response);
         }
