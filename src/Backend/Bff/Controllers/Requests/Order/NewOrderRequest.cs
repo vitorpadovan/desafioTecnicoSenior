@@ -1,6 +1,4 @@
-﻿using Challenge.Domain.Entities;
-
-namespace Bff.Controllers.Requests.Order
+﻿namespace Bff.Controllers.Requests.Order
 {
     public class NewOrderRequest
     {

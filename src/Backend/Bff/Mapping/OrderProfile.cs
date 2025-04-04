@@ -2,7 +2,6 @@
 using Bff.Controllers.Requests.Order;
 using Bff.Controllers.Response.Order;
 using Challenge.Domain.Entities;
-using Challenge.Domain.Repositories;
 
 namespace Bff.Mapping
 {

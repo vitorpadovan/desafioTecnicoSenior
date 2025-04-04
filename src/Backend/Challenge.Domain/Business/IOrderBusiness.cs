@@ -1,6 +1,5 @@
 ﻿
 using Challenge.Domain.Entities;
-using Microsoft.AspNetCore.Identity;
 
 namespace Challenge.Domain.Business
 {

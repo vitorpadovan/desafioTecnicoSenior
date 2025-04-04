@@ -1,6 +1,5 @@
 ﻿using Challenge.Domain.Entities;
 using Challenge.Domain.Repositories;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace Challenge.Orm.Repositories

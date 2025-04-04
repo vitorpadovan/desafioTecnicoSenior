@@ -1,7 +1,6 @@
 ﻿using Challenge.Domain.Business;
 using Challenge.Domain.Entities;
 using Challenge.Domain.Repositories;
-using Microsoft.AspNetCore.Identity;
 
 namespace Challenge.Application.Business
 {
@@ -19,7 +18,7 @@ namespace Challenge.Application.Business
         }
 
         public async Task<Order> SaveOrderAsync(List<OrderDetail> detais, Guid ResellerId, Guid user)
-         {
+        {
             Order order = new()
             {
                 ClientUserId = user,
