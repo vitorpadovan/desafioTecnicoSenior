@@ -74,9 +74,8 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
-
 app.MapControllers();
 app.UseSwagger();
 app.UseSwaggerUI(x => { });
-
+app.Services.InitDatabase();
 app.Run();
