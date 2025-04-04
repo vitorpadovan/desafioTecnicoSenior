@@ -5,8 +5,7 @@ namespace Challenge.Domain.Repositories
 {
     public interface IResellerRepository
     {
-        Task<Reseller> GetResellerAsync(Guid id);
-        Task<Reseller> GetResellerByIdAsync(Guid id);
+        Task<Reseller> GetResellerByIdAsync(Guid id, bool AsNonTrack = true);
         public Task<Reseller> SaveResellerAsync(Reseller reseller);
     }
 }

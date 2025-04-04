@@ -3,6 +3,7 @@ using AutoMapper;
 using Bff.Controllers.Requests.User;
 using Bff.Controllers.Response.User;
 using Challenge.Domain.Business;
+using Challenge.Domain.Contexts;
 using Challenge.Domain.Enums;
 using Microsoft.AspNetCore.Authentication.BearerToken;
 using Microsoft.AspNetCore.Authorization;
@@ -14,11 +15,9 @@ namespace Bff.Controllers
     public class UserController : AppBaseController<UserController>
     {
         private readonly IUserBusiness _userBusiness;
-        private readonly IMapper _mapper;
-        public UserController(ILogger<UserController> logger, IUserBusiness userBusiness, IMapper mapper) : base(logger, mapper)
+        public UserController(ILogger<UserController> logger, IUserBusiness userBusiness, IMapper mapper, IUserContext userContext) : base(logger, mapper, userContext)
         {
             _userBusiness = userBusiness;
-            _mapper = mapper;
         }
 
         //TODO create admin deve ser diferente

@@ -1,6 +1,8 @@
-﻿using Challenge.Application.Business;
+﻿using Challenge.Application;
+using Challenge.Application.Business;
 using Challenge.Application.Services;
 using Challenge.Domain.Business;
+using Challenge.Domain.Contexts;
 using Challenge.Domain.Repositories;
 using Challenge.Domain.Service;
 using Challenge.Orm.Repositories;
@@ -19,6 +21,9 @@ namespace Bff.Extensions
             services.AddScoped<IResellerUserRepository, ResellerUserRepository>();
             services.AddScoped<IProductBusiness, ProductBusiness>();
             services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IOrderBusiness, OrderBusiness>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IUserContext, UserContext>();
         }
     }
 }

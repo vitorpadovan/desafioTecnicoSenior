@@ -11,17 +11,12 @@ namespace Challenge.Orm.Repositories
         {
         }
 
-        public Task<Reseller> GetResellerAsync(Guid id)
+        public Task<Reseller> GetResellerByIdAsync(Guid id,bool AsNonTrack = true)
         {
-            return _dbSet
-                .Where(x => x.Id == id)
-                .AsNoTracking()
-                .FirstAsync();
-        }
-
-        public Task<Reseller> GetResellerByIdAsync(Guid id)
-        {
-            return _dbSet.Where(x => x.Id == id).FirstAsync();
+            var query = _dbSet.Where(x => x.Id == id);
+            if(AsNonTrack)
+                query = query.AsNoTracking();
+            return query.FirstAsync();
         }
 
         public async Task<Reseller> SaveResellerAsync(Reseller reseller)

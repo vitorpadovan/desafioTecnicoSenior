@@ -20,6 +20,14 @@ namespace Challenge.Orm.Repositories
             //TODO devo colocar uma resolução melhor para not found, retornando 404 em todos os endpoins possíveis que geram itens não encontrados
         }
 
+        public Product GetProductById(int productId, bool AsNonTracking = true)
+        {
+            var product = _dbSet.Where(x => x.Id == productId);
+            if (AsNonTracking)
+                product.AsNoTracking();
+            return product.First();
+        }
+
         public Task<List<Product>> GetProductsAsync(Guid resellerId, bool AsNonTracking = true)
         {
             var products = _dbSet.Where(x => x.ResellerId == resellerId);

@@ -2,6 +2,7 @@
 using Bff.Controllers.Requests.Reseller;
 using Bff.Controllers.Response.Reseller;
 using Challenge.Domain.Business;
+using Challenge.Domain.Contexts;
 using Challenge.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,7 +11,7 @@ namespace Bff.Controllers
     public class ResellerController : AppBaseController<ResellerController>
     {
         private readonly IResellerBusiness _resellerBusiness;
-        public ResellerController(ILogger<ResellerController> logger, IResellerBusiness resellerBusiness, IMapper mapper) : base(logger, mapper)
+        public ResellerController(ILogger<ResellerController> logger, IResellerBusiness resellerBusiness, IMapper mapper, IUserContext userContext) : base(logger, mapper, userContext)
         {
             _resellerBusiness = resellerBusiness;
         }

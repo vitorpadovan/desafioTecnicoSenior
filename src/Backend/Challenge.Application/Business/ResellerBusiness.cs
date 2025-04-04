@@ -21,7 +21,7 @@ namespace Challenge.Application.Business
 
         public Task<Reseller> GetResellerAsync(Guid id)
         {
-            return _resellerRepository.GetResellerAsync(id);
+            return _resellerRepository.GetResellerByIdAsync(id);
         }
 
         public async Task<Reseller> SaveResellerAsync(Reseller reseller)

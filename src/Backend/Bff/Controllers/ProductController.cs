@@ -2,6 +2,7 @@
 using Bff.Controllers.Requests.Product;
 using Bff.Controllers.Response.Product;
 using Challenge.Domain.Business;
+using Challenge.Domain.Contexts;
 using Challenge.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,7 +13,7 @@ namespace Bff.Controllers
     public class ProductController : AppBaseController<ProductController>
     {
         private readonly IProductBusiness _productBusiness;
-        public ProductController(ILogger<ProductController> logger, IMapper mapper, IProductBusiness productBusiness) : base(logger, mapper)
+        public ProductController(ILogger<ProductController> logger, IMapper mapper, IProductBusiness productBusiness, IUserContext userContext) : base(logger, mapper, userContext)
         {
             _productBusiness = productBusiness;
         }
