@@ -1,0 +1,6 @@
+services:
+  bff:
+    image: ${DOCKER_REGISTRY-}bff
+    build:
+      context: ./src/Backend
+      dockerfile: Bff/Dockerfile
