@@ -13,7 +13,7 @@ namespace Challenge.Orm.Repositories
 
         public Task<Product> GetProductAsync(Guid resellerId, int productId, bool AsNonTracking = true)
         {
-            var product = _dbSet.Where(x=>x.ResellerId == resellerId && x.Id == productId);
+            var product = _dbSet.Where(x => x.ResellerId == resellerId && x.Id == productId);
             if (AsNonTracking)
                 product.AsNoTracking();
             return product.FirstAsync();

@@ -27,7 +27,7 @@ namespace Challenge.Application.Business
         {
             var result = await _userManager.FindByEmailAsync(email);
             var usersInRole = await _userManager.GetUsersInRoleAsync(UserProfiles.ADMINISTRATOR.ToString());
-            if (result != null && usersInRole.Count>0)
+            if (result != null && usersInRole.Count > 0)
                 throw new BusinessException("Usuário já cadastrado");
             if (usersInRole.Count > 0)
             {
