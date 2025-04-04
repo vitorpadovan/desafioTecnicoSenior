@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-
-namespace Bff.Controllers.Response.User
+﻿namespace Bff.Controllers.Response.User
 {
     public class UserCreatedResponse
     {

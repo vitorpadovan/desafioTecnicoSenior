@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Challenge.Domain.Business;
-using Challenge.Domain.Service;
+﻿using Challenge.Domain.Business;
 using Challenge.Domain.Enums;
-using Challenge.Domain.Extension;
 using Challenge.Domain.Exceptions;
+using Challenge.Domain.Extension;
+using Challenge.Domain.Service;
+using Microsoft.AspNetCore.Identity;
 
 namespace Challenge.Application.Business
 {
@@ -26,14 +26,14 @@ namespace Challenge.Application.Business
         public async Task CreateAdminUserAsync(string email, string password)
         {
             var result = await _userManager.FindByEmailAsync(email);
-            if(result != null)
+            if (result != null)
                 throw new BusinessException("Usuário já cadastrado");
             var usersInRole = await _userManager.GetUsersInRoleAsync(UserProfiles.ADMINISTRATOR.ToString());
-            if(usersInRole.Count > 0)
+            if (usersInRole.Count > 0)
             {
                 var usuarios = usersInRole.Select(x => x.UserName).ToList();
-                throw new BusinessException($"Usuários {String.Join(",",usuarios)} já cadastrados como administrador");
-            }   
+                throw new BusinessException($"Usuários {String.Join(",", usuarios)} já cadastrados como administrador");
+            }
             string role = await CreateRole(UserProfiles.ADMINISTRATOR);
             role = await CreateRole(UserProfiles.COMMONUSER);
             role = await CreateRole(UserProfiles.RESELLER);

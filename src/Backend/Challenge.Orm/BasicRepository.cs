@@ -1,15 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Challenge.Orm
 {
     //TODO G pode extender interface/objeto para AppBaseController?
-    public abstract class BasicRepository<T,G> where T : class where G : BasicRepository<T,G>
+    public abstract class BasicRepository<T, G> where T : class where G : BasicRepository<T, G>
     {
         protected readonly AppDbContext _context;
         protected readonly DbSet<T> _dbSet;

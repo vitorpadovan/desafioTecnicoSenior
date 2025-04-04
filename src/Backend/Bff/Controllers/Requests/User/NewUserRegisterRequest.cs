@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Bff.Controllers.Requests.User
+﻿namespace Bff.Controllers.Requests.User
 {
     /// <summary>
     /// Dto for new user on systema

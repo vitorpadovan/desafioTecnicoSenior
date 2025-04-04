@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Bff.Controllers
 {
-    
+
     public class ProductController : AppBaseController<ProductController>
     {
         public ProductController(ILogger<ProductController> logger, IMapper mapper) : base(logger, mapper)

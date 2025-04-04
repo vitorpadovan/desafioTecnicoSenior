@@ -10,7 +10,8 @@ namespace Challenge.Orm.Mapping
         {
             builder.HasMany(x => x.Reseller)
                 .WithMany(x => x.ResellerUsers)
-                .UsingEntity(j => {
+                .UsingEntity(j =>
+                {
                     j.ToTable("resselertouser");
                     j.Property("ResellerId").HasColumnName("resellerid");
                     j.Property("ResellerUsersId").HasColumnName("resellerusersid");

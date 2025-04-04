@@ -15,6 +15,10 @@ namespace Bff.Extensions
             services.AddScoped<IResellerRepository, ResellerRepository>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IUserBusiness, UserBusiness>();
+            services.AddScoped<IResellerUserBusiness, ResellerUserBusiness>();
+            services.AddScoped<IResellerUserRepository, ResellerUserRepository>();
+            services.AddScoped<IProductBusiness, ProductBusiness>();
+            services.AddScoped<IProductRepository, ProductRepository>();
         }
     }
 }

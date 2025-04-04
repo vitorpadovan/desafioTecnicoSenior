@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Challenge.Domain.Business;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bff.Controllers

@@ -1,11 +1,5 @@
 using Bff.Extensions;
-using Challenge.Application.Business;
-using Challenge.Application.Services;
-using Challenge.Domain.Business;
-using Challenge.Domain.Repositories;
-using Challenge.Domain.Service;
 using Challenge.Orm;
-using Challenge.Orm.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
