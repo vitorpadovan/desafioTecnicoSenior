@@ -32,5 +32,13 @@ namespace Bff.Controllers
             var responseDto = _mapper.Map<ResellerResponse>(@return);
             return Ok(responseDto);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Index()
+        {
+            var @return = await _resellerBusiness.GetResellersAsync();
+            var responseDto = _mapper.Map<ResellerResponse>(@return);
+            return Ok(responseDto);
+        }
     }
 }

@@ -24,6 +24,11 @@ namespace Challenge.Application.Business
             return _resellerRepository.GetResellerByIdAsync(id);
         }
 
+        public Task<List<Reseller>> GetResellersAsync(bool AsNonTrack = true)
+        {
+            return _resellerRepository.GetResellersAsync(AsNonTrack);
+        }
+
         public async Task<Reseller> SaveResellerAsync(Reseller reseller)
         {
             reseller.State = Domain.Enums.EntityState.Saved;

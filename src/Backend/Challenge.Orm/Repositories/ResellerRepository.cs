@@ -19,6 +19,14 @@ namespace Challenge.Orm.Repositories
             return query.FirstAsync();
         }
 
+        public Task<List<Reseller>> GetResellersAsync(bool AsNonTrack = true)
+        {
+            var query = _dbSet.AsQueryable();
+            if (AsNonTrack)
+                query = query.AsNoTracking();
+            return query.ToListAsync();
+        }
+
         public async Task<Reseller> SaveResellerAsync(Reseller reseller)
         {
             var @return = await _dbSet.AddAsync(reseller);
