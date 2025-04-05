@@ -17,7 +17,7 @@ namespace Bff.Extensions
                 var retryPolicy = Policy
                     .Handle<NpgsqlException>(ex => ex.SqlState.StartsWith("08"))
                     .Or<TimeoutException>()
-                    .Or<NullReferenceException> ()
+                    .Or<NullReferenceException>()
                     .WaitAndRetry(
                         retryCount: 5,
                         sleepDurationProvider: attempt => TimeSpan.FromSeconds(attempt * 3),
@@ -32,7 +32,8 @@ namespace Bff.Extensions
                     {
                         dbContext.Database.EnsureCreated();
                     });
-                }catch(NpgsqlException ex) when (!ex.SqlState.StartsWith("08"))
+                }
+                catch (NpgsqlException ex) when (!ex.SqlState.StartsWith("08"))
                 {
                     //Nada a fazer
                 }
@@ -47,7 +48,8 @@ namespace Bff.Extensions
                     {
                         dbContext.Database.Migrate();
                     });
-                }catch(NpgsqlException ex) when (!ex.SqlState.StartsWith("08"))
+                }
+                catch (NpgsqlException ex) when (!ex.SqlState.StartsWith("08"))
                 {
                     //Nada a fazer
                 }
