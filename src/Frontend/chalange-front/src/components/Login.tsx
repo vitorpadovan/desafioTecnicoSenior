@@ -1,17 +1,38 @@
 'use client';
 import { useState } from "react";
+import { signIn } from "next-auth/react";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Email:", email, "Password:", password);
+
+    // Chama o método signIn do NextAuth
+    const result = await signIn("credentials", {
+      redirect: false, // Evita redirecionamento automático
+      email,
+      password,
+    });
+
+    if (result?.error) {
+      setError("Credenciais inválidas. Tente novamente.");
+      setTimeout(() => setError(""), 3000); // Remove o erro após 3 segundos
+    } else {
+      // Redireciona ou executa alguma ação após o login bem-sucedido
+      window.location.href = "/dashboard"; // Exemplo de redirecionamento
+    }
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen">
+    <div className="flex items-center justify-center min-h-screen relative">
+      {error && (
+        <div className="absolute top-4 left-1/2 transform -translate-x-1/2 bg-red-500 text-white px-4 py-2 rounded shadow-lg">
+          {error}
+        </div>
+      )}
       <div className="w-full max-w-md p-8 bg-white dark:bg-gray-800 rounded shadow-md">
         <h2 className="mb-6 text-2xl font-bold text-center text-black dark:text-white">Login</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
