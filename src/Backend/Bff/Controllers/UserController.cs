@@ -40,6 +40,7 @@ namespace Bff.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody] LoginRequest login)
         {
+            _logger.LogDebug($"Login: {login.Email} - {login.Password}");
             var user = await _userBusiness.LoginAsync(login.Email!, login.Email!, login.Password!);
             if (user == null)
                 return Unauthorized();
