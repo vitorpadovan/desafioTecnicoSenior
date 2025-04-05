@@ -26,7 +26,7 @@ namespace Bff.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> CreateAdminUser([FromBody] NewUserRegisterRequest login)
         {
-            _logger.LogDebug($"CreateAdminUser: {login.Email} - {login.Password}");
+            _logger.LogDebug($"CreateAdminUser s: {login.Email} - {login.Password}");
             await _userBusiness.CreateAdminUserAsync(login.Email, login.Password);
             return Created();
         }

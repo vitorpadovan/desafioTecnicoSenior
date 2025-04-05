@@ -31,3 +31,5 @@ services:
     environment:
       - 'ASPNETCORE_ENVIRONMENT=Development'
       - 'ConnectionStrings__PostgresSqlConnectionString=Host=postgrechalangesrv;Port=5432;Username=challenge;Password=Senh@123;Database=challenge;Pooling=true;'
+    volumes:
+      - './nuget_offline_packages/packages:/root/.nuget/packages:rw'

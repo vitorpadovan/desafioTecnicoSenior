@@ -12,6 +12,8 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
+# Adiciona o volume para cache do NuGet
+VOLUME ["/root/.nuget/packages"]
 COPY ["Bff/Bff.csproj", "Bff/"]
 COPY ["Challenge.Application/Challenge.Application.csproj", "Challenge.Application/"]
 COPY ["Challenge.Domain/Challenge.Domain.csproj", "Challenge.Domain/"]
