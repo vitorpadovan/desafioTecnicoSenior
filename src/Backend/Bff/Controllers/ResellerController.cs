@@ -37,7 +37,7 @@ namespace Bff.Controllers
         public async Task<IActionResult> Index()
         {
             var @return = await _resellerBusiness.GetResellersAsync();
-            var responseDto = _mapper.Map<ResellerResponse>(@return);
+            var responseDto = _mapper.Map<List<ResellerResponse>>(@return);
             return Ok(responseDto);
         }
     }
