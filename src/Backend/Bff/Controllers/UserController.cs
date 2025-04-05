@@ -26,6 +26,7 @@ namespace Bff.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> CreateAdminUser([FromBody] NewUserRegisterRequest login)
         {
+            _logger.LogDebug($"CreateAdminUser: {login.Email} - {login.Password}");
             await _userBusiness.CreateAdminUserAsync(login.Email, login.Password);
             return Created();
         }
@@ -64,6 +65,7 @@ namespace Bff.Controllers
         [Authorize(Roles = nameof(UserProfiles.ADMINISTRATOR))]
         public async Task<IActionResult> SingUp([FromBody] NewUserRegisterRequest login)
         {
+            _logger.LogDebug($"SingUp: {login.Email} - {login.Password}");
             var response = await _userBusiness.CreateUserAsync(login.Email!, login.Email!, login.Password!);
             var @return = _mapper.Map<UserCreatedResponse>(response);
             return Created(string.Empty, response);
