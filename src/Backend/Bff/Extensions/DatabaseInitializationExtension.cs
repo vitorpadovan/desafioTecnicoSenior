@@ -15,7 +15,9 @@ namespace Bff.Extensions
                 var logger = scope.ServiceProvider.GetRequiredService<ILogger<AppDbContext>>();
 
                 var retryPolicy = Policy
-                    .Handle<NpgsqlException>(ex => ex.SqlState.StartsWith("08")) // Apenas problemas de conexão (SQLSTATE começando com "08")
+                    .Handle<NpgsqlException>(ex => ex.SqlState.StartsWith("08"))
+                    .Or<TimeoutException>()
+                    .Or<NullReferenceException> ()
                     .WaitAndRetry(
                         retryCount: 5,
                         sleepDurationProvider: attempt => TimeSpan.FromSeconds(attempt * 3),
@@ -36,7 +38,7 @@ namespace Bff.Extensions
                 }
                 catch (Exception ex)
                 {
-                    logger.LogError(ex, "Database creation failed após múltiplas tentativas.");
+                    logger.LogError(ex, "Database creation failed após múltiplas tentativas com o tipo de erro {erro}", ex.GetType().Name);
                 }
 
                 try
@@ -51,7 +53,7 @@ namespace Bff.Extensions
                 }
                 catch (Exception ex)
                 {
-                    logger.LogError(ex, "Database migration failed após múltiplas tentativas.");
+                    logger.LogError(ex, "Database migration failed após múltiplas tentativas com o tipo de erro {erro}", ex.GetType().Name);
                 }
             }
         }
