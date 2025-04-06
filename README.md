@@ -1,5 +1,11 @@
 # desafioTecnicoSenior
 
+## Sequencia de inicialização
+1. Subir Posgresql
+2. Subir Redis
+3. Subir RabbitMq
+4. Iniciar filas
+
 ## instruções para executar
 1. Criar usuário admin
 2. Criar Revenda
