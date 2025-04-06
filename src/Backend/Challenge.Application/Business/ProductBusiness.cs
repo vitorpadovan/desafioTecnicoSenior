@@ -27,7 +27,7 @@ namespace Challenge.Application.Business
 
         public async Task<Product> SaveProductAsync(Guid id, Product request)
         {
-            var reseller = await _resellerRepository.GetResellerByIdAsync(id);
+            var reseller = await _resellerRepository.GetResellerByIdAsync(id, false);
             request.Reseller = reseller;
             return await _productRepository.SaveProductAsync(request);
         }
