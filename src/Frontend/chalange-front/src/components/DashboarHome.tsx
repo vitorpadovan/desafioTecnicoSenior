@@ -3,6 +3,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation"; // Importação do useRouter
 import Link from "next/link";
 import { ReactNode, useEffect, useState } from "react";
+import LoadingPage from "./LoadingPage";
 
 interface DashboardHomeProps {
   children: ReactNode;
@@ -43,7 +44,7 @@ export default function DashboardHome({ children }: DashboardHomeProps) {
             {children}
           </main>
         </div>
-      ) : null}
+      ) : <LoadingPage />}  
     </>
   );
 }
