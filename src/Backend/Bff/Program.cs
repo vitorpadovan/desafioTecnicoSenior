@@ -1,4 +1,6 @@
+using Bff.Controllers.Filters;
 using Bff.Extensions;
+using Challenge.Common.Interfaces;
 using Challenge.Orm;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -110,6 +112,12 @@ app.UseAuthorization();
 
 app.MapControllers();
 app.UseSwagger();
-app.UseSwaggerUI(x => { });
+app.UseSwaggerUI();
 app.Services.InitDatabase();
+using (var scope = app.Services.CreateScope())
+{
+    var rabbitMq = scope.ServiceProvider.GetRequiredService<IMessageService>();
+    rabbitMq.InitQueueAsync("order-recived").Wait();
+    rabbitMq.InitQueueAsync("request_to_fabric").Wait();
+}
 app.Run();
