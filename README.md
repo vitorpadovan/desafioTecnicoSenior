@@ -11,3 +11,6 @@
 2. Redis
 3. Postgresql
 4. React/Next Js
+
+## Observações.
+1. Um representante não pode ter dois produtos com o mesmo nome.
