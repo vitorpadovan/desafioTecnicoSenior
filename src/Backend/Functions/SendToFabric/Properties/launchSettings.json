@@ -1,0 +1,15 @@
+{
+  "profiles": {
+    "SendToFabric": {
+      "commandName": "Project",
+      "commandLineArgs": "--port 7294"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker",
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
+      "containerRunArguments": "--init",
+      "httpPort": 34881,
+      "useSSL": false
+    }
+  }
+}
