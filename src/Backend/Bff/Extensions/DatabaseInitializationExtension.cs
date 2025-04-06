@@ -1,7 +1,7 @@
 ﻿using Challenge.Orm;
 using Microsoft.EntityFrameworkCore;
-using Polly;
 using Npgsql; // Adicione esta importação para lidar com NpgsqlException
+using Polly;
 
 namespace Bff.Extensions
 {
