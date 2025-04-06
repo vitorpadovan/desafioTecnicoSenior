@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import { ResellerService } from "@/api-services/reseller-services";
 import { ResellerInformationData } from "@/interfaces/Reseller";
 import { useEffect, useState } from "react";
@@ -13,9 +13,7 @@ export default function ResellerInformation(params: {
       .then((data) => {
         setResellerData(data);
       })
-      .catch((error) => {
-        
-      });
+      .catch((error) => {});
   }, [params.resellerId]);
 
   if (!resellerData) {
@@ -32,15 +30,22 @@ export default function ResellerInformation(params: {
         <h1 className="text-center text-2xl font-bold mb-4">
           Informações do Revendedor
         </h1>
-        <p>
-          <strong>Razão Social:</strong> {resellerData.registredName}
-        </p>
-        <p>
-          <strong>Nome Fantasia:</strong> {resellerData.tradeName}
-        </p>
-        <p>
-          <strong>Email:</strong> {resellerData.email}
-        </p>
+        <table className="table-auto w-full">
+          <thead>
+            <tr>
+              <th className="px-4 py-2 text-center w-1/3">Razão Social</th>
+              <th className="px-4 py-2 text-center w-1/3">Nome Fantasia</th>
+              <th className="px-4 py-2 text-center w-1/3">Email</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td className="px-4 py-2 text-center w-1/3">{resellerData.registredName}</td>
+              <td className="px-4 py-2 text-center w-1/3">{resellerData.tradeName}</td>
+              <td className="px-4 py-2 text-center w-1/3">{resellerData.email}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   );
