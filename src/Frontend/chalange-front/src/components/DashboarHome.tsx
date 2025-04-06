@@ -1,5 +1,5 @@
 "use client";
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation"; // Importação do useRouter
 import Link from "next/link";
 import { ReactNode, useEffect, useState } from "react";
@@ -36,6 +36,14 @@ export default function DashboardHome({ children }: DashboardHomeProps) {
                   <Link href="/dashboard" className="hover:underline">
                     Home
                   </Link>
+                </li>
+                <li>
+                  <button
+                    onClick={() => signOut()}
+                    className="hover:underline text-red-500"
+                  >
+                    Logout
+                  </button>
                 </li>
               </ul>
             </nav>

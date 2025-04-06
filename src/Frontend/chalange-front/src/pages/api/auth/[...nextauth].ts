@@ -65,7 +65,27 @@ export default NextAuth({
   },
   events: {
     async signOut({ token }) {
-      //TODO implementar
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/User/logout`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token.accessToken}`,
+          },
+        });
+
+        if (!res.ok) {
+          console.error("Erro ao realizar logout no servidor:", res.statusText);
+        }
+
+        const cookies = document.cookie.split("; ");
+        for (const cookie of cookies) {
+          const [name] = cookie.split("=");
+          document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+        }
+      } catch (error) {
+        console.error("Erro ao realizar logout:", error);
+      }
     },
   },
 });
