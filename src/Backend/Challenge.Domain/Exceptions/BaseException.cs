@@ -2,7 +2,6 @@
 
 namespace Challenge.Domain.Exceptions
 {
-    //TODO adicionar filtro de exceção
     public class BaseException : Exception
     {
         public BaseException()

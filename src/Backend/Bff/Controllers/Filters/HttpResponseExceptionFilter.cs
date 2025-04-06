@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Challenge.Domain.Exceptions;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 
@@ -16,6 +17,12 @@ namespace Bff.Controllers.Filters
         
         public void OnActionExecuted(ActionExecutedContext context)
         {
+            if(context.Exception != null && context.Exception is NotFoundExceptions)
+            {
+                context.Result = new NotFoundResult();
+                context.ExceptionHandled = true;
+                return;
+            }
             if (ShouldConvertToProblemDetails(context))
             {
                 string detailMessage = null;

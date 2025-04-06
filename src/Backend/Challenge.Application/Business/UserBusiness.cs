@@ -22,7 +22,6 @@ namespace Challenge.Application.Business
             _roleManager = roleManager;
         }
 
-        //TODO adicionar inicialização de roles no startup
         public async Task CreateAdminUserAsync(string email, string password)
         {
             var result = await _userManager.FindByEmailAsync(email);

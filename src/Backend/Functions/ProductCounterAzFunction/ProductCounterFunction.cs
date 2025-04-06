@@ -50,7 +50,6 @@ namespace ProductCounterAzFunction
             }
             else
             {
-                //TODO colocar o waiting aqui
                 var order = await _appDbContext.Set<OrderDetail>()
                     .Where(x => x.Product.Id == orderDetailItem.ProductId && x.Order.Id == orderDetailItem.OrderId)
                     .FirstAsync();

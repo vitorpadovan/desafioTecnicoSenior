@@ -34,8 +34,8 @@ namespace Challenge.Application.Business
             reseller.State = Domain.Enums.EntityState.Saved;
             var @return = await _resellerRepository.SaveResellerAsync(reseller);
 
-            //TODO adicionar criação de senha para fornecedores
-            await _userBusiness.CreateUserAsync(@return.Email, @return.Email, String.Empty.GeneratePassword());
+            ////TODO adicionar criação de senha para fornecedores
+            //await _userBusiness.CreateUserAsync(@return.Email, @return.Email, String.Empty.GeneratePassword());
             this._logger.LogDebug("Salvo no banco a revenda {revenda}", @return);
             return @return;
         }

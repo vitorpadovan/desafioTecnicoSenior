@@ -3,7 +3,6 @@ using Microsoft.Extensions.Logging;
 
 namespace Challenge.Orm
 {
-    //TODO G pode extender interface/objeto para AppBaseController?
     public abstract class BasicRepository<T, G> where T : class where G : BasicRepository<T, G>
     {
         protected readonly AppDbContext _context;

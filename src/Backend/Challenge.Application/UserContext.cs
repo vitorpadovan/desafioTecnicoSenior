@@ -32,9 +32,8 @@ namespace Challenge.Application
                 throw new BusinessException("Usuário não autenticado");
             var claim = _httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email);
             var @return = await _userManager.FindByEmailAsync(claim!.Value);
-            //TODO adicionar notfoud exception
             if (@return == null)
-                throw new Exception("Não foram encontrados usuários para este token");
+                throw new NotFoundExceptions("Não foram encontrados usuários para este token");
             return @return!;
         }
     }

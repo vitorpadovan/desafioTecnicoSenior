@@ -8,7 +8,7 @@ using System.Text.Json;
 
 namespace Challenge.Common.Implementation
 {
-    public class RabbitMqService : IMessageService, IAsyncDisposable
+    public class RabbitMqService : IMessageService, IAsyncDisposable, IDisposable
     {
         private readonly IConfiguration _configuration;
         private readonly ILogger<RabbitMqService> _logger;
@@ -105,6 +105,17 @@ namespace Challenge.Common.Implementation
             }
 
             await _connection.CloseAsync();
+            _connection.Dispose();
+        }
+
+        public void Dispose()
+        {
+            foreach (var channel in _channelPool)
+            {
+                channel.CloseAsync().Wait();
+                channel.DisposeAsync();
+            }
+            _connection.CloseAsync().Wait();
             _connection.Dispose();
         }
 

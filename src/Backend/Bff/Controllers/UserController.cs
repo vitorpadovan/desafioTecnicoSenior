@@ -20,7 +20,6 @@ namespace Bff.Controllers
             _userBusiness = userBusiness;
         }
 
-        //TODO create admin deve ser diferente
         [HttpPost]
         [Route("create-admin")]
         [AllowAnonymous]

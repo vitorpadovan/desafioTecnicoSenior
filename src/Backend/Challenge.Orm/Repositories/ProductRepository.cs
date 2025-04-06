@@ -17,7 +17,6 @@ namespace Challenge.Orm.Repositories
             if (AsNonTracking)
                 product.AsNoTracking();
             return product.FirstAsync();
-            //TODO devo colocar uma resolução melhor para not found, retornando 404 em todos os endpoins possíveis que geram itens não encontrados
         }
 
         public Product GetProductById(int productId, bool AsNonTracking = true)
