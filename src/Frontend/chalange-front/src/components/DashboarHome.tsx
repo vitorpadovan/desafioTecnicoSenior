@@ -15,8 +15,6 @@ export default function DashboardHome({ children }: DashboardHomeProps) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    console.log("Session:", session);
-    console.log("Status:", status);
     if (status === "authenticated") {
       setIsAuthenticated(true);
     } else if (status === "unauthenticated") {

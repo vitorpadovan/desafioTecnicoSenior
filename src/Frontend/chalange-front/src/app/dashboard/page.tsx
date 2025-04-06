@@ -1,4 +1,7 @@
 "use client";
+
+import ResellerList from "@/components/Reseller/ResellerList";
+
 export default function Dashboard() {
-  return <p>Bem-vindo ao Dashboard!</p>;
+  return <ResellerList />;
 }
