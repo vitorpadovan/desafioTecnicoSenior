@@ -16,6 +16,13 @@ namespace Bff.Controllers
             _resellerBusiness = resellerBusiness;
         }
 
+        /// <summary>
+        /// Cria um novo revendedor.
+        /// </summary>
+        /// <param name="request">Dados do revendedor.</param>
+        /// <returns>Revendedor criado.</returns>
+        /// <response code="201">Revendedor criado com sucesso.</response>
+        /// <response code="400">Erro na requisição.</response>
         [HttpPost]
         public async Task<IActionResult> Index([FromBody] NewResellerRequest request)
         {
@@ -25,6 +32,13 @@ namespace Bff.Controllers
             return Created(GetBaseUri(responseDto.Id.ToString()), responseDto);
         }
 
+        /// <summary>
+        /// Obtém os detalhes de um revendedor.
+        /// </summary>
+        /// <param name="id">ID do revendedor.</param>
+        /// <returns>Detalhes do revendedor.</returns>
+        /// <response code="200">Revendedor encontrado.</response>
+        /// <response code="404">Revendedor não encontrado.</response>
         [HttpGet("{id}")]
         public async Task<IActionResult> Index([FromRoute] Guid id)
         {
@@ -33,6 +47,11 @@ namespace Bff.Controllers
             return Ok(responseDto);
         }
 
+        /// <summary>
+        /// Lista todos os revendedores.
+        /// </summary>
+        /// <returns>Lista de revendedores.</returns>
+        /// <response code="200">Lista retornada com sucesso.</response>
         [HttpGet]
         public async Task<IActionResult> Index()
         {

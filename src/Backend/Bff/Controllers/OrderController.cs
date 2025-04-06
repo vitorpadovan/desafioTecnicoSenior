@@ -18,6 +18,15 @@ namespace Bff.Controllers
             _orderBusiness = orderBusiness;
         }
 
+        /// <summary>
+        /// Cria um novo pedido para um revendedor.
+        /// </summary>
+        /// <param name="request">Detalhes do pedido.</param>
+        /// <param name="resellerId">ID do revendedor.</param>
+        /// <returns>O pedido criado.</returns>
+        /// <response code="201">Pedido criado com sucesso.</response>
+        /// <response code="400">Erro na requisição.</response>
+        /// <response code="401">Usuário não autorizado.</response>
         [HttpPost("{resellerId}")]
         public async Task<IActionResult> Index([FromBody] NewOrderRequest request, [FromRoute] Guid resellerId)
         {

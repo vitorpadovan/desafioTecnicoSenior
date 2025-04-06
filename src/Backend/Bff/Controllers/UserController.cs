@@ -1,5 +1,4 @@
-﻿
-using AutoMapper;
+﻿using AutoMapper;
 using Bff.Controllers.Requests.User;
 using Bff.Controllers.Response.User;
 using Challenge.Domain.Business;
@@ -20,6 +19,13 @@ namespace Bff.Controllers
             _userBusiness = userBusiness;
         }
 
+        /// <summary>
+        /// Cria um usuário administrador.
+        /// </summary>
+        /// <param name="login">Dados do novo usuário.</param>
+        /// <returns>Usuário administrador criado.</returns>
+        /// <response code="201">Usuário criado com sucesso.</response>
+        /// <response code="400">Erro na requisição.</response>
         [HttpPost]
         [Route("create-admin")]
         [AllowAnonymous]
@@ -30,6 +36,13 @@ namespace Bff.Controllers
             return Created();
         }
 
+        /// <summary>
+        /// Realiza login no sistema.
+        /// </summary>
+        /// <param name="login">Credenciais do usuário.</param>
+        /// <returns>Token de acesso.</returns>
+        /// <response code="200">Login realizado com sucesso.</response>
+        /// <response code="401">Credenciais inválidas.</response>
         /// <summary>
         /// Used to do login on app
         /// </summary>
@@ -54,6 +67,14 @@ namespace Bff.Controllers
             return Ok(response);
         }
 
+        /// <summary>
+        /// Cria um novo usuário.
+        /// </summary>
+        /// <param name="login">Dados do novo usuário.</param>
+        /// <returns>Usuário criado.</returns>
+        /// <response code="201">Usuário criado com sucesso.</response>
+        /// <response code="400">Erro na requisição.</response>
+        /// <response code="403">Usuário não tem permissão para criar usuários.</response>
         /// <summary>
         /// Used to create a user
         /// </summary>
