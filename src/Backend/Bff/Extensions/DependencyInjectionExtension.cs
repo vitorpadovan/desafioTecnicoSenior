@@ -1,6 +1,8 @@
 ﻿using Challenge.Application;
 using Challenge.Application.Business;
 using Challenge.Application.Services;
+using Challenge.Common.Implementation;
+using Challenge.Common.Interfaces;
 using Challenge.Domain.Business;
 using Challenge.Domain.Contexts;
 using Challenge.Domain.Repositories;
@@ -24,6 +26,7 @@ namespace Bff.Extensions
             services.AddScoped<IOrderBusiness, OrderBusiness>();
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IUserContext, UserContext>();
+            services.AddScoped<IMessageService, RabbitMqService>();
         }
     }
 }

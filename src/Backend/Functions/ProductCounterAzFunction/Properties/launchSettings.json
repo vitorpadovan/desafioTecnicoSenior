@@ -1,0 +1,15 @@
+{
+  "profiles": {
+    "ProductCounterAzFunction": {
+      "commandName": "Project",
+      "commandLineArgs": "--port 7161"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker",
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
+      "containerRunArguments": "--init",
+      "httpPort": 33938,
+      "useSSL": false
+    }
+  }
+}
