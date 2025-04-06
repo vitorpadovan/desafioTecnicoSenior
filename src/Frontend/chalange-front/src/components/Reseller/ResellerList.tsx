@@ -8,15 +8,13 @@ export default function ResellerList() {
   const [resellers, setResellers] = useState<Reseller[]>([]);
 
   useEffect(() => {
-    async function fetchResellers() {
-      try {
-        const data = await ResellerService.getResellers();
+    ResellerService.getResellers()
+      .then((data) => {
         setResellers(data);
-      } catch (error) {
+      })
+      .catch((error) => {
         console.error("Erro ao buscar revendedores:", error);
-      }
-    }
-    fetchResellers();
+      });
   }, []);
 
   return (
@@ -61,12 +59,14 @@ export default function ResellerList() {
                   {reseller.email}
                 </td>
                 <td className="border border-gray-300 dark:border-gray-700 px-4 py-2">
-                  <button
-                    // onClick={() => navigate(`/dashboard/${reseller.id}`)}
-                    className="bg-blue-500 dark:bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-600 dark:hover:bg-blue-800"
-                  >
-                    <Link href={`/dashboard/${reseller.id}`}>Comprar</Link>
-                  </button>
+                  <Link href={`/dashboard/${reseller.id}`}>
+                    <button
+                      // onClick={() => navigate(`/dashboard/${reseller.id}`)}
+                      className="bg-blue-500 dark:bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-600 dark:hover:bg-blue-800"
+                    >
+                      Comprar
+                    </button>
+                  </Link>
                 </td>
               </tr>
             ))}
