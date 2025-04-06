@@ -30,6 +30,7 @@ services:
       - '8080:8080'
     environment:
       - 'ASPNETCORE_ENVIRONMENT=Development'
+      - 'ConnectionStrings__RabbitMq=amqp://guest:guest@rabbitmqchsrv:5672'
       - 'ConnectionStrings__PostgresSqlConnectionString=Host=postgrechalangesrv;Port=5432;Username=challenge;Password=Senh@123;Database=challenge;Pooling=true;'
     volumes:
       - './nuget_offline_packages/packages:/root/.nuget/packages:rw'
@@ -45,6 +46,33 @@ services:
       - NEXT_PUBLIC_API_URL=http://192.168.68.54:8080
     depends_on:
       - bff
+  rabbitmqchsrv:
+    image: 'rabbitmq:management-alpine'
+    container_name: rabbitmqchsrv
+    # ports:
+    #   - '15672:15672'
+    #   - '15671:15671'
+    #   - '5672:5672'
+    #   - '5671:5671'
+    #   - '4369:4369'
+    #   - '25672:25672'
+    restart: always
+    healthcheck:
+      test: [ "CMD", "rabbitmq-diagnostics", "ping" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+  redischsrv:
+    image: 'redis:8.0-M04-alpine'
+    container_name: redischsrv
+    restart: always
+    # ports:
+    #   - '6379:6379'
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
   productcounter:
     image: ${DOCKER_REGISTRY-}productcounter
     build:
@@ -53,10 +81,14 @@ services:
     depends_on:
       bff:
         condition: service_started
+      redischsrv:
+        condition: service_healthy
+      rabbitmqchsrv:
+        condition: service_healthy
     environment:
       - 'ASPNETCORE_ENVIRONMENT=Development'
-      - 'ConnectionStrings__RabbitMq=amqp://guest:guest@localhost:5672'
-      - 'ConnectionStrings__RedisServer=localhost:6379'
+      - 'ConnectionStrings__RabbitMq=amqp://guest:guest@rabbitmqchsrv:5672'
+      - 'ConnectionStrings__RedisServer=redischsrv:6379'
       - 'ConnectionStrings__PostgresSqlConnectionString=Host=postgrechalangesrv;Port=5432;Username=challenge;Password=Senh@123;Database=challenge;Pooling=true;'
       - 'AzureWebJobsStorage='
       - 'FUNCTIONS_WORKER_RUNTIME=dotnet-isolated'
@@ -70,10 +102,14 @@ services:
     depends_on:
       bff:
         condition: service_started
+      redischsrv:
+        condition: service_healthy
+      rabbitmqchsrv:
+        condition: service_healthy
     environment:
       - 'ASPNETCORE_ENVIRONMENT=Development'
-      - 'ConnectionStrings__RabbitMq=amqp://guest:guest@localhost:5672'
-      - 'ConnectionStrings__RedisServer=localhost:6379'
+      - 'ConnectionStrings__RabbitMq=amqp://guest:guest@rabbitmqchsrv:5672'
+      - 'ConnectionStrings__RedisServer=redischsrv:6379'
       - 'ConnectionStrings__PostgresSqlConnectionString=Host=postgrechalangesrv;Port=5432;Username=challenge;Password=Senh@123;Database=challenge;Pooling=true;'
       - 'AzureWebJobsStorage='
       - 'FUNCTIONS_WORKER_RUNTIME=dotnet-isolated'
