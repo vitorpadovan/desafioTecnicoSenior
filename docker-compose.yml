@@ -1,7 +1,7 @@
 services:
   postgrechalangesrv:
     image: 'postgres:17-alpine'
-    container_name: postgres
+    container_name: postgreschalange
     restart: always
     ports:
       - '5433:5432'
