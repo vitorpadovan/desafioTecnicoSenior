@@ -5,3 +5,10 @@ export interface Reseller {
     tradeName: string;
     email: string;
 }
+export interface ResellerInformationData {
+  id: string;
+  document: string;
+  registredName: string;
+  tradeName: string;
+  email: string;
+}

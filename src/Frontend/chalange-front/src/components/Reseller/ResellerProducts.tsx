@@ -1,44 +1,46 @@
-//TODO esse componente pode
+"use client";
+import React from "react";
 import { useEffect, useState } from "react";
-import { ResellerService } from "../../api-services/reseller-services";
-import { Reseller } from "../../interfaces/Reseller";
+import { ProductService } from "../../api-services/product-services";
+import { Product } from "../../interfaces/Product";
 import Link from "next/link";
 
-export default function ResellerList() {
-  const [resellers, setResellers] = useState<Reseller[]>([]);
+export default function ResellerProducts(params: {
+  readonly resellerId: string;
+}) {
+  const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
-    async function fetchResellers() {
+    async function fetchProducts() {
       try {
-        const data = await ResellerService.getResellers();
-        setResellers(data);
+        const data = await ProductService.getProductsFromReseller(
+          params.resellerId
+        );
+        setProducts(data);
       } catch (error) {
-        console.error("Erro ao buscar revendedores:", error);
+        console.error("Erro ao buscar produtos do revendedor:", error);
       }
     }
-    fetchResellers();
-  }, []);
+    fetchProducts();
+  }, [params.resellerId]);
 
   return (
     <div className="flex justify-center mt-8">
       <div className="w-4/5">
         <h1 className="text-center text-2xl font-bold mb-4">
-          Lista de Revendedores
+          Produtos do Revendedor
         </h1>
         <table className="table-auto w-full border-collapse border border-gray-300 dark:border-gray-700">
           <thead>
             <tr className="bg-gray-200 dark:bg-gray-800">
               <th className="border border-gray-300 dark:border-gray-700 px-4 py-2">
-                Nome Fantasia
+                Nome
               </th>
               <th className="border border-gray-300 dark:border-gray-700 px-4 py-2">
-                Razão Social
+                Descrição
               </th>
               <th className="border border-gray-300 dark:border-gray-700 px-4 py-2">
-                Documento
-              </th>
-              <th className="border border-gray-300 dark:border-gray-700 px-4 py-2">
-                Email
+                Preço
               </th>
               <th className="border border-gray-300 dark:border-gray-700 px-4 py-2">
                 Ações
@@ -46,26 +48,20 @@ export default function ResellerList() {
             </tr>
           </thead>
           <tbody>
-            {resellers.map((reseller) => (
-              <tr key={reseller.id} className="text-center">
+            {products.map((product) => (
+              <tr key={product.id} className="text-center">
                 <td className="border border-gray-300 dark:border-gray-700 px-4 py-2">
-                  {reseller.tradeName}
+                  {product.name}
                 </td>
                 <td className="border border-gray-300 dark:border-gray-700 px-4 py-2">
-                  {reseller.registredName}
+                  {product.description}
                 </td>
                 <td className="border border-gray-300 dark:border-gray-700 px-4 py-2">
-                  {reseller.document}
+                  {product.price}
                 </td>
                 <td className="border border-gray-300 dark:border-gray-700 px-4 py-2">
-                  {reseller.email}
-                </td>
-                <td className="border border-gray-300 dark:border-gray-700 px-4 py-2">
-                  <button
-                    // onClick={() => navigate(`/dashboard/${reseller.id}`)}
-                    className="bg-blue-500 dark:bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-600 dark:hover:bg-blue-800"
-                  >
-                    <Link href={`/dashboard/${reseller.id}`}>Comprar</Link>
+                  <button className="bg-blue-500 dark:bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-600 dark:hover:bg-blue-800">
+                    <Link href={`/purchase/${product.id}`}>Comprar</Link>
                   </button>
                 </td>
               </tr>
