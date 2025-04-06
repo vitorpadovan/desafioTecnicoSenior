@@ -9,6 +9,9 @@ export const fetchClient = async (
   const jwt = session?.accessToken;
   const url = process.env.NEXT_PUBLIC_API_URL;
   const finalUrl = `${url}/${input}`;
+  console.log("URL:", finalUrl);
+  console.log("JWT:", jwt);
+  console.log("Request Init:", init);
   const response = await fetch(finalUrl, {
     ...init,
     headers: {

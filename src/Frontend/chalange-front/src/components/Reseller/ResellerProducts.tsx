@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { ProductService } from "../../api-services/product-services";
 import { Product } from "../../interfaces/Product";
+import { OrderService } from "../../api-services/order-service";
 
 export default function ResellerProducts(params: { readonly resellerId: string }) {
   const [products, setProducts] = useState<Product[]>([]);
@@ -33,16 +34,22 @@ export default function ResellerProducts(params: { readonly resellerId: string }
     }));
   };
 
-  const handlePurchase = () => {
+  const handlePurchase = async () => {
     const orderDetails = Object.entries(cart)
       .filter(([_, quantity]) => quantity > 0)
       .map(([productId, quantity]) => ({
         productId: Number(productId),
         quantity,
       }));
-    console.log({ orderDetails });
-    alert("Pedido gerado! Verifique o console para os detalhes.");
-    setCart({}); // Limpa as quantidades no carrinho
+
+    try {
+      await OrderService.createOrder(params.resellerId, orderDetails);
+      alert("Pedido gerado com sucesso!");
+      setCart({}); // Limpa as quantidades no carrinho
+    } catch (error) {
+      console.error("Erro ao criar pedido:", error);
+      alert("Erro ao criar pedido. Tente novamente.");
+    }
   };
 
   return (
