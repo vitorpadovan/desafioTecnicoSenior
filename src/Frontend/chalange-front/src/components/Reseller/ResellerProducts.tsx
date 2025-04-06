@@ -36,7 +36,10 @@ export default function ResellerProducts(params: { readonly resellerId: string }
 
   const handlePurchase = async () => {
     const orderDetails = Object.entries(cart)
-      .filter(([_, quantity]) => quantity > 0)
+      .filter(([obj, quantity]) => {
+        console.log(obj, quantity);
+        return quantity > 0
+      })
       .map(([productId, quantity]) => ({
         productId: Number(productId),
         quantity,

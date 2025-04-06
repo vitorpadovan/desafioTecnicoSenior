@@ -9,20 +9,16 @@ export default function Login() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    // Chama o método signIn do NextAuth
     const result = await signIn("credentials", {
-      redirect: false, // Evita redirecionamento automático
+      redirect: false,
       email,
       password,
     });
-
     if (result?.error) {
       setError("Credenciais inválidas. Tente novamente.");
-      setTimeout(() => setError(""), 3000); // Remove o erro após 3 segundos
+      setTimeout(() => setError(""), 3000);
     } else {
-      // Redireciona ou executa alguma ação após o login bem-sucedido
-      window.location.href = "/dashboard"; // Exemplo de redirecionamento
+      window.location.href = "/dashboard";
     }
   };
 

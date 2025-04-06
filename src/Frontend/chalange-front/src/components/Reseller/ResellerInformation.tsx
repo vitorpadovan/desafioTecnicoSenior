@@ -13,7 +13,7 @@ export default function ResellerInformation(params: {
       .then((data) => {
         setResellerData(data);
       })
-      .catch((error) => {});
+      .catch((error) => {console.log(error)});
   }, [params.resellerId]);
 
   if (!resellerData) {

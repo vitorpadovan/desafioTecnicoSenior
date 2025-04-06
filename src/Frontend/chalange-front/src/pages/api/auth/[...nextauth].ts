@@ -8,6 +8,10 @@ declare module "next-auth" {
 }
 const url = `${process.env.NEXT_PUBLIC_API_URL}/api/User/login`;
 
+interface AccessTokenResponse {
+  accessToken: string;
+}
+
 export default NextAuth({
   providers: [
     CredentialsProvider({
@@ -17,6 +21,8 @@ export default NextAuth({
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
+        console.log('credentials', credentials);
+        console.log(`URL a ser usada é ${url}`);
         if (!credentials) {
           return null;
         }
@@ -49,9 +55,13 @@ export default NextAuth({
     }),
   ],
   callbacks: {
+    signIn({ user, account, profile }) {
+      console.log("Usuário logado: callback", user, account, profile);
+      return true;
+    },
     async jwt({ token, user }) {
-      if (user) {
-        token.accessToken = (user as any).accessToken;
+      if (user && "accessToken" in user) {
+        token.accessToken = (user as AccessTokenResponse).accessToken;
       }
       return token;
     },
@@ -64,6 +74,9 @@ export default NextAuth({
     signIn: "/login",
   },
   events: {
+    async signIn({ user, account, profile }) {
+      console.log("Usuário logado: events", user, account, profile);
+    },
     async signOut({ token }) {
       try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/User/logout`, {
