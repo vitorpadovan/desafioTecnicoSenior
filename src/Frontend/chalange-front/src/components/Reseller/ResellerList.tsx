@@ -60,8 +60,7 @@ export default function ResellerList() {
                 </td>
                 <td className="border border-gray-300 dark:border-gray-700 px-4 py-2">
                   <Link href={`/dashboard/${reseller.id}`}>
-                    <button
-                      // onClick={() => navigate(`/dashboard/${reseller.id}`)}
+                    <button 
                       className="bg-blue-500 dark:bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-600 dark:hover:bg-blue-800"
                     >
                       Comprar
