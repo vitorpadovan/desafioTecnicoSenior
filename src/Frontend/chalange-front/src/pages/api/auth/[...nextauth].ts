@@ -6,6 +6,7 @@ declare module "next-auth" {
     accessToken?: string;
   }
 }
+const url = `${process.env.NEXT_PUBLIC_API_URL}/api/User/login`;
 
 export default NextAuth({
   providers: [
@@ -16,8 +17,9 @@ export default NextAuth({
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        const url = `${process.env.NEXT_PUBLIC_API_URL}/api/User/login`;
-        console.log(url);
+        if (!credentials) {
+          return null;
+        }
         try {
           const res = await fetch(url, {
             method: "POST",
@@ -48,19 +50,22 @@ export default NextAuth({
   ],
   callbacks: {
     async jwt({ token, user }) {
-      // Armazena o token no JWT
       if (user) {
         token.accessToken = (user as any).accessToken;
       }
       return token;
     },
     async session({ session, token }) {
-      // Adiciona o token à sessão
       session.accessToken = token.accessToken as string | undefined;
       return session;
     },
   },
   pages: {
     signIn: "/login",
+  },
+  events: {
+    async signOut({ token }) {
+      //TODO implementar
+    },
   },
 });
