@@ -45,3 +45,20 @@ services:
       - NEXT_PUBLIC_API_URL=http://192.168.68.54:8080
     depends_on:
       - bff
+  productcounter:
+    image: ${DOCKER_REGISTRY-}productcounter
+    build:
+      context: ./src/Backend
+      dockerfile: Functions/ProductCounterAzFunction/Dockerfile
+    depends_on:
+      bff:
+        condition: service_started
+    environment:
+      - 'ASPNETCORE_ENVIRONMENT=Development'
+      - 'ConnectionStrings__RabbitMq=amqp://guest:guest@localhost:5672'
+      - 'ConnectionStrings__RedisServer=localhost:6379'
+      - 'ConnectionStrings__PostgresSqlConnectionString=Host=postgrechalangesrv;Port=5432;Username=challenge;Password=Senh@123;Database=challenge;Pooling=true;'
+      - 'AzureWebJobsStorage='
+      - 'FUNCTIONS_WORKER_RUNTIME=dotnet-isolated'
+    ports:
+      - '7071:80'
