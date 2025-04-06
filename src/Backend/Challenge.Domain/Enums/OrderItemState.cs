@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Challenge.Domain.Enums
+﻿namespace Challenge.Domain.Enums
 {
     public enum OrderItemState
     {
@@ -12,16 +6,16 @@ namespace Challenge.Domain.Enums
         Valid = 1,
         Invalid = 2,
         Processing = 3,
-        Cancelled = 4, 
-        Completed = 5, 
+        Cancelled = 4,
+        Completed = 5,
         WaintToShipp = 6,
         Shipped = 7,
-        WaintSendToFactory = 8, 
+        WaintSendToFactory = 8,
         SendToFactory = 9,
-        WaintToRecive = 10, 
+        WaintToRecive = 10,
         Recived = 11,
-        WaintToPay = 12, 
-        Payed = 13, 
-        WaintToSendToClient = 14, 
+        WaintToPay = 12,
+        Payed = 13,
+        WaintToSendToClient = 14,
     }
 }

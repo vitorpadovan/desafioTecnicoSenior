@@ -1,10 +1,10 @@
 ﻿using Challenge.Common.Interfaces;
-using System.Collections.Concurrent;
-using System.Text.Json;
-using System.Text;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
+using System.Collections.Concurrent;
+using System.Text;
+using System.Text.Json;
 
 namespace Challenge.Common.Implementation
 {

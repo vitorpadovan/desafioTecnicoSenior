@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Challenge.Domain.Entities.Dto
+﻿namespace Challenge.Domain.Entities.Dto
 {
     public class OrderDetailDto
     {

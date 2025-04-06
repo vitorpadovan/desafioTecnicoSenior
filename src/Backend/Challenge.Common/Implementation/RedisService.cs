@@ -2,12 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using StackExchange.Redis;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace Challenge.Common.Implementation
 {
@@ -46,7 +41,7 @@ namespace Challenge.Common.Implementation
         public async Task<int> AddCounter(string key, int quantity = 1)
         {
             _logger.LogDebug("Incrementing counter for key: {Key} by {Quantity}", key, quantity);
-            return (int) await this._database.StringIncrementAsync(key, quantity);
+            return (int)await this._database.StringIncrementAsync(key, quantity);
         }
 
         public async Task DeleteCounter(string key)
