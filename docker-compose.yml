@@ -3,8 +3,6 @@ services:
     image: 'postgres:17-alpine'
     container_name: postgreschalange
     restart: always
-    ports:
-      - '5433:5432'
     environment:
       - 'POSTGRES_USER=challenge'
       - 'POSTGRES_PASSWORD=Senh@123'
@@ -49,13 +47,6 @@ services:
   rabbitmqchsrv:
     image: 'rabbitmq:management-alpine'
     container_name: rabbitmqchsrv
-    # ports:
-    #   - '15672:15672'
-    #   - '15671:15671'
-    #   - '5672:5672'
-    #   - '5671:5671'
-    #   - '4369:4369'
-    #   - '25672:25672'
     restart: always
     healthcheck:
       test: [ "CMD", "rabbitmq-diagnostics", "ping" ]
@@ -66,8 +57,6 @@ services:
     image: 'redis:8.0-M04-alpine'
     container_name: redischsrv
     restart: always
-    # ports:
-    #   - '6379:6379'
     healthcheck:
       test: [ "CMD", "redis-cli", "ping" ]
       interval: 10s
@@ -92,8 +81,6 @@ services:
       - 'ConnectionStrings__PostgresSqlConnectionString=Host=postgrechalangesrv;Port=5432;Username=challenge;Password=Senh@123;Database=challenge;Pooling=true;'
       - 'AzureWebJobsStorage='
       - 'FUNCTIONS_WORKER_RUNTIME=dotnet-isolated'
-    ports:
-      - '7071:80'
   sendtofabric:
     image: ${DOCKER_REGISTRY-}sendtofabric
     build:
@@ -116,5 +103,3 @@ services:
       - 'ServiceUrl=https://example.com/api'
       - 'ServiceUser=admin'
       - 'ServicePassword=password123'
-    ports:
-      - '7072:80'
