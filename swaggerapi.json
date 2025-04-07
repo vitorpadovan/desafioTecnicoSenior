@@ -1,488 +1,585 @@
 {
-    "openapi": "3.0.4",
-    "info": {
-      "title": "Bff",
-      "version": "v1"
-    },
-    "paths": {
-      "/api/Order/{resellerId}": {
-        "post": {
-          "tags": [
-            "Order"
-          ],
-          "parameters": [
-            {
-              "name": "resellerId",
-              "in": "path",
-              "required": true,
-              "schema": {
-                "type": "string",
-                "format": "uuid"
-              }
-            }
-          ],
-          "requestBody": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/NewOrderRequest"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/NewOrderRequest"
-                }
-              },
-              "application/*+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/NewOrderRequest"
-                }
-              }
-            }
-          },
-          "responses": {
-            "200": {
-              "description": "OK"
+  "openapi": "3.0.4",
+  "info": {
+    "title": "Bff",
+    "version": "v1"
+  },
+  "paths": {
+    "/api/Order/{resellerId}": {
+      "post": {
+        "tags": [
+          "Order"
+        ],
+        "summary": "Creates a new order for a reseller.",
+        "parameters": [
+          {
+            "name": "resellerId",
+            "in": "path",
+            "description": "Reseller ID.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
             }
           }
-        }
-      },
-      "/api/Product/{resellerId}": {
-        "post": {
-          "tags": [
-            "Product"
-          ],
-          "parameters": [
-            {
-              "name": "resellerId",
-              "in": "path",
-              "required": true,
+        ],
+        "requestBody": {
+          "description": "Order details.",
+          "content": {
+            "application/json": {
               "schema": {
-                "type": "string",
-                "format": "uuid"
-              }
-            }
-          ],
-          "requestBody": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/NewProductRequest"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/NewProductRequest"
-                }
-              },
-              "application/*+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/NewProductRequest"
-                }
-              }
-            }
-          },
-          "responses": {
-            "200": {
-              "description": "OK"
-            }
-          }
-        },
-        "get": {
-          "tags": [
-            "Product"
-          ],
-          "parameters": [
-            {
-              "name": "resellerId",
-              "in": "path",
-              "required": true,
-              "schema": {
-                "type": "string",
-                "format": "uuid"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK"
-            }
-          }
-        }
-      },
-      "/api/Product/{resellerId}/{productId}": {
-        "get": {
-          "tags": [
-            "Product"
-          ],
-          "parameters": [
-            {
-              "name": "resellerId",
-              "in": "path",
-              "required": true,
-              "schema": {
-                "type": "string",
-                "format": "uuid"
+                "$ref": "#/components/schemas/NewOrderRequest"
               }
             },
-            {
-              "name": "productId",
-              "in": "path",
-              "required": true,
+            "text/json": {
               "schema": {
-                "type": "integer",
-                "format": "int32"
+                "$ref": "#/components/schemas/NewOrderRequest"
               }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK"
-            }
-          }
-        }
-      },
-      "/api/Reseller": {
-        "post": {
-          "tags": [
-            "Reseller"
-          ],
-          "requestBody": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/NewResellerRequest"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/NewResellerRequest"
-                }
-              },
-              "application/*+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/NewResellerRequest"
-                }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewOrderRequest"
               }
-            }
-          },
-          "responses": {
-            "200": {
-              "description": "OK"
             }
           }
         },
-        "get": {
-          "tags": [
-            "Reseller"
-          ],
-          "responses": {
-            "200": {
-              "description": "OK"
-            }
-          }
-        }
-      },
-      "/api/Reseller/{id}": {
-        "get": {
-          "tags": [
-            "Reseller"
-          ],
-          "parameters": [
-            {
-              "name": "id",
-              "in": "path",
-              "required": true,
-              "schema": {
-                "type": "string",
-                "format": "uuid"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK"
-            }
-          }
-        }
-      },
-      "/api/User/create-admin": {
-        "post": {
-          "tags": [
-            "User"
-          ],
-          "requestBody": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/NewUserRegisterRequest"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/NewUserRegisterRequest"
-                }
-              },
-              "application/*+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/NewUserRegisterRequest"
-                }
-              }
-            }
+        "responses": {
+          "200": {
+            "description": "OK"
           },
-          "responses": {
-            "200": {
-              "description": "OK"
-            }
-          }
-        }
-      },
-      "/api/User/login": {
-        "post": {
-          "tags": [
-            "User"
-          ],
-          "requestBody": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoginRequest"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoginRequest"
-                }
-              },
-              "application/*+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoginRequest"
-                }
-              }
-            }
+          "201": {
+            "description": "Order successfully created."
           },
-          "responses": {
-            "200": {
-              "description": "OK"
-            }
-          }
-        }
-      },
-      "/api/User/singUp": {
-        "post": {
-          "tags": [
-            "User"
-          ],
-          "requestBody": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/NewUserRegisterRequest"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/NewUserRegisterRequest"
-                }
-              },
-              "application/*+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/NewUserRegisterRequest"
-                }
-              }
-            }
+          "400": {
+            "description": "Bad request."
           },
-          "responses": {
-            "200": {
-              "description": "OK"
-            }
+          "401": {
+            "description": "Unauthorized user."
           }
         }
       }
     },
-    "components": {
-      "schemas": {
-        "AddressRequest": {
-          "required": [
-            "city",
-            "country",
-            "postalCode",
-            "province",
-            "street"
-          ],
-          "type": "object",
-          "properties": {
-            "postalCode": {
+    "/api/Product/{resellerId}": {
+      "post": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Creates a new product for a reseller.",
+        "parameters": [
+          {
+            "name": "resellerId",
+            "in": "path",
+            "description": "Reseller ID.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Product data.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewProductRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewProductRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewProductRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Product successfully created."
+          },
+          "400": {
+            "description": "Bad request."
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Lists all products of a reseller.",
+        "parameters": [
+          {
+            "name": "resellerId",
+            "in": "path",
+            "description": "Reseller ID.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List successfully returned."
+          },
+          "404": {
+            "description": "Reseller not found."
+          }
+        }
+      }
+    },
+    "/api/Product/{resellerId}/{productId}": {
+      "get": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Retrieves the details of a specific product.",
+        "parameters": [
+          {
+            "name": "resellerId",
+            "in": "path",
+            "description": "Reseller ID.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "productId",
+            "in": "path",
+            "description": "Product ID.",
+            "required": true,
+            "schema": {
               "type": "integer",
               "format": "int32"
-            },
-            "country": {
-              "type": "string",
-              "nullable": true
-            },
-            "province": {
-              "type": "string",
-              "nullable": true
-            },
-            "city": {
-              "type": "string",
-              "nullable": true
-            },
-            "street": {
-              "type": "string",
-              "nullable": true
-            },
-            "number": {
-              "type": "integer",
-              "format": "int32",
-              "nullable": true
             }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Product found."
           },
-          "additionalProperties": false
-        },
-        "ContactRequest": {
-          "type": "object",
-          "additionalProperties": false
-        },
-        "LoginRequest": {
-          "required": [
-            "email",
-            "password"
-          ],
-          "type": "object",
-          "properties": {
-            "email": {
-              "type": "string",
-              "nullable": true
+          "404": {
+            "description": "Product not found."
+          }
+        }
+      }
+    },
+    "/api/Reseller": {
+      "post": {
+        "tags": [
+          "Reseller"
+        ],
+        "summary": "Creates a new reseller.",
+        "requestBody": {
+          "description": "Reseller data.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewResellerRequest"
+              }
             },
-            "password": {
-              "type": "string",
-              "nullable": true
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewResellerRequest"
+              }
             },
-            "twoFactorCode": {
-              "type": "string",
-              "nullable": true
-            },
-            "twoFactorRecoveryCode": {
-              "type": "string",
-              "nullable": true
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewResellerRequest"
+              }
             }
-          },
-          "additionalProperties": false
+          }
         },
-        "NewOrderDetailRequest": {
-          "type": "object",
-          "properties": {
-            "productId": {
-              "type": "integer",
-              "format": "int32"
-            },
-            "quantity": {
-              "type": "integer",
-              "format": "int32"
-            }
+        "responses": {
+          "200": {
+            "description": "OK"
           },
-          "additionalProperties": false
+          "201": {
+            "description": "Reseller successfully created."
+          },
+          "400": {
+            "description": "Bad request."
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Reseller"
+        ],
+        "summary": "Lists all resellers.",
+        "responses": {
+          "200": {
+            "description": "List successfully returned."
+          }
+        }
+      }
+    },
+    "/api/Reseller/{id}": {
+      "get": {
+        "tags": [
+          "Reseller"
+        ],
+        "summary": "Retrieves the details of a reseller.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Reseller ID.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Reseller found."
+          },
+          "404": {
+            "description": "Reseller not found."
+          }
+        }
+      }
+    },
+    "/api/User/create-admin": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Creates an administrator user.",
+        "requestBody": {
+          "description": "New user data.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewUserRegisterRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewUserRegisterRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewUserRegisterRequest"
+              }
+            }
+          }
         },
-        "NewOrderRequest": {
-          "type": "object",
-          "properties": {
-            "orderDetails": {
-              "type": "array",
-              "items": {
-                "$ref": "#/components/schemas/NewOrderDetailRequest"
-              },
-              "nullable": true
-            }
+        "responses": {
+          "200": {
+            "description": "OK"
           },
-          "additionalProperties": false
+          "201": {
+            "description": "User successfully created."
+          },
+          "400": {
+            "description": "Bad request."
+          }
+        }
+      }
+    },
+    "/api/User/login": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Logs into the system.",
+        "requestBody": {
+          "description": "User credentials.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          }
         },
-        "NewProductRequest": {
-          "required": [
-            "name",
-            "price"
-          ],
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string",
-              "nullable": true
-            },
-            "description": {
-              "type": "string",
-              "nullable": true
-            },
-            "price": {
-              "minimum": 0.01,
-              "type": "number",
-              "format": "double"
-            }
+        "responses": {
+          "200": {
+            "description": "Login successful."
           },
-          "additionalProperties": false
+          "401": {
+            "description": "Invalid credentials."
+          }
+        }
+      }
+    },
+    "/api/User/singUp": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Creates a new user.",
+        "requestBody": {
+          "description": "New user data.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewUserRegisterRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewUserRegisterRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewUserRegisterRequest"
+              }
+            }
+          }
         },
-        "NewResellerRequest": {
-          "required": [
-            "addresses",
-            "document",
-            "email",
-            "registredName",
-            "tradeName"
-          ],
-          "type": "object",
-          "properties": {
-            "document": {
-              "type": "string",
-              "nullable": true
-            },
-            "registredName": {
-              "type": "string",
-              "nullable": true
-            },
-            "tradeName": {
-              "type": "string",
-              "nullable": true
-            },
-            "email": {
-              "type": "string",
-              "format": "email",
-              "nullable": true
-            },
-            "contacts": {
-              "type": "array",
-              "items": {
-                "$ref": "#/components/schemas/ContactRequest"
-              },
-              "nullable": true
-            },
-            "addresses": {
-              "minItems": 1,
-              "type": "array",
-              "items": {
-                "$ref": "#/components/schemas/AddressRequest"
-              },
-              "nullable": true
-            }
+        "responses": {
+          "200": {
+            "description": "OK"
           },
-          "additionalProperties": false
-        },
-        "NewUserRegisterRequest": {
-          "required": [
-            "email",
-            "password"
-          ],
-          "type": "object",
-          "properties": {
-            "email": {
-              "type": "string",
-              "nullable": true
-            },
-            "password": {
-              "type": "string",
-              "nullable": true
-            }
+          "201": {
+            "description": "User successfully created."
           },
-          "additionalProperties": false
+          "400": {
+            "description": "Bad request."
+          },
+          "403": {
+            "description": "User does not have permission to create users."
+          }
         }
       }
     }
+  },
+  "components": {
+    "schemas": {
+      "AddressRequest": {
+        "required": [
+          "city",
+          "country",
+          "postalCode",
+          "province",
+          "street"
+        ],
+        "type": "object",
+        "properties": {
+          "postalCode": {
+            "type": "integer",
+            "description": "The postal code of the address.",
+            "format": "int32"
+          },
+          "country": {
+            "type": "string",
+            "description": "The country of the address.",
+            "nullable": true
+          },
+          "province": {
+            "type": "string",
+            "description": "The province of the address.",
+            "nullable": true
+          },
+          "city": {
+            "type": "string",
+            "description": "The city of the address.",
+            "nullable": true
+          },
+          "street": {
+            "type": "string",
+            "description": "The street of the address.",
+            "nullable": true
+          },
+          "number": {
+            "type": "integer",
+            "description": "The number of the address (optional).",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "DTO for a reseller's address information."
+      },
+      "ContactRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "DTO for a reseller's contact information."
+      },
+      "LoginRequest": {
+        "required": [
+          "email",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "nullable": true
+          },
+          "twoFactorCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "twoFactorRecoveryCode": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "NewOrderDetailRequest": {
+        "type": "object",
+        "properties": {
+          "productId": {
+            "type": "integer",
+            "description": "The ID of the product.",
+            "format": "int32"
+          },
+          "quantity": {
+            "type": "integer",
+            "description": "The quantity of the product.",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "DTO for the details of an order."
+      },
+      "NewOrderRequest": {
+        "type": "object",
+        "properties": {
+          "orderDetails": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NewOrderDetailRequest"
+            },
+            "description": "The list of order details.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "DTO for creating a new order."
+      },
+      "NewProductRequest": {
+        "required": [
+          "name",
+          "price"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the product.",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "description": "The description of the product (optional).",
+            "nullable": true
+          },
+          "price": {
+            "minimum": 0.01,
+            "type": "number",
+            "description": "The price of the product.",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false,
+        "description": "DTO for registering a new product."
+      },
+      "NewResellerRequest": {
+        "required": [
+          "addresses",
+          "document",
+          "email",
+          "registredName",
+          "tradeName"
+        ],
+        "type": "object",
+        "properties": {
+          "document": {
+            "type": "string",
+            "description": "The CNPJ document of the reseller.",
+            "nullable": true
+          },
+          "registredName": {
+            "type": "string",
+            "description": "The registered name of the reseller.",
+            "nullable": true
+          },
+          "tradeName": {
+            "type": "string",
+            "description": "The trade name of the reseller.",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "description": "The email of the reseller.",
+            "format": "email",
+            "nullable": true
+          },
+          "contacts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ContactRequest"
+            },
+            "description": "The list of contacts for the reseller.",
+            "nullable": true
+          },
+          "addresses": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AddressRequest"
+            },
+            "description": "The list of addresses for the reseller.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "DTO for registering a new reseller."
+      },
+      "NewUserRegisterRequest": {
+        "required": [
+          "email",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "The email of the user.",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "description": "The password of the user.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "DTO for registering a new user in the system."
+      }
+    }
   }
+}
