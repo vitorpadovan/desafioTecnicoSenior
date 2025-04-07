@@ -113,7 +113,7 @@ namespace Challenge.Common.Implementation
             foreach (var channel in _channelPool)
             {
                 channel.CloseAsync().Wait();
-                channel.DisposeAsync();
+                channel.DisposeAsync().AsTask().Wait();
             }
             _connection.CloseAsync().Wait();
             _connection.Dispose();
