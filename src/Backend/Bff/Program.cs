@@ -1,5 +1,6 @@
 using Bff.Controllers.Filters;
 using Bff.Extensions;
+using Bff.Middleware;
 using Challenge.Common.Interfaces;
 using Challenge.Orm;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -116,6 +117,7 @@ app.UseAuthorization();
 app.MapControllers();
 app.UseSwagger();
 app.UseSwaggerUI();
+app.UseMiddleware<LogScopeMiddleware>();
 app.Services.InitDatabase();
 using (var scope = app.Services.CreateScope())
 {

@@ -100,3 +100,18 @@ A documentação completa da API pode ser encontrada no arquivo [`swaggerapi.jso
 ## Observações
 
 1. Um representante não pode ter dois produtos com o mesmo nome.
+
+## Observabilidade e Monitoramento
+
+Para monitorar os logs e o desempenho da aplicação, é possível integrar uma ferramenta de observabilidade no projeto. Recomendamos o uso de **Application Insights**.
+
+### Configuração de Observabilidade
+
+1. **Application Insights**  
+   Caso esteja utilizando o Azure, é possível integrar o **Application Insights** para monitorar logs, métricas e rastreamento distribuído.
+
+### Benefícios
+
+- Identificação rápida de problemas.
+- Monitoramento em tempo real do desempenho.
+- Melhor rastreamento de erros e falhas.
