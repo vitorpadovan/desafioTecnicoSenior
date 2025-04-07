@@ -17,12 +17,12 @@ namespace Bff.Controllers
         }
 
         /// <summary>
-        /// Cria um novo revendedor.
+        /// Creates a new reseller.
         /// </summary>
-        /// <param name="request">Dados do revendedor.</param>
-        /// <returns>Revendedor criado.</returns>
-        /// <response code="201">Revendedor criado com sucesso.</response>
-        /// <response code="400">Erro na requisição.</response>
+        /// <param name="request">Reseller data.</param>
+        /// <returns>Reseller created.</returns>
+        /// <response code="201">Reseller successfully created.</response>
+        /// <response code="400">Bad request.</response>
         [HttpPost]
         public async Task<IActionResult> Index([FromBody] NewResellerRequest request)
         {
@@ -33,12 +33,12 @@ namespace Bff.Controllers
         }
 
         /// <summary>
-        /// Obtém os detalhes de um revendedor.
+        /// Retrieves the details of a reseller.
         /// </summary>
-        /// <param name="id">ID do revendedor.</param>
-        /// <returns>Detalhes do revendedor.</returns>
-        /// <response code="200">Revendedor encontrado.</response>
-        /// <response code="404">Revendedor não encontrado.</response>
+        /// <param name="id">Reseller ID.</param>
+        /// <returns>Reseller details.</returns>
+        /// <response code="200">Reseller found.</response>
+        /// <response code="404">Reseller not found.</response>
         [HttpGet("{id}")]
         public async Task<IActionResult> Index([FromRoute] Guid id)
         {
@@ -48,10 +48,10 @@ namespace Bff.Controllers
         }
 
         /// <summary>
-        /// Lista todos os revendedores.
+        /// Lists all resellers.
         /// </summary>
-        /// <returns>Lista de revendedores.</returns>
-        /// <response code="200">Lista retornada com sucesso.</response>
+        /// <returns>List of resellers.</returns>
+        /// <response code="200">List successfully returned.</response>
         [HttpGet]
         public async Task<IActionResult> Index()
         {

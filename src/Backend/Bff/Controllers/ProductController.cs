@@ -19,13 +19,13 @@ namespace Bff.Controllers
         }
 
         /// <summary>
-        /// Cria um novo produto para um revendedor.
+        /// Creates a new product for a reseller.
         /// </summary>
-        /// <param name="resellerId">ID do revendedor.</param>
-        /// <param name="request">Dados do produto.</param>
-        /// <returns>Produto criado.</returns>
-        /// <response code="201">Produto criado com sucesso.</response>
-        /// <response code="400">Erro na requisição.</response>
+        /// <param name="resellerId">Reseller ID.</param>
+        /// <param name="request">Product data.</param>
+        /// <returns>Product created.</returns>
+        /// <response code="201">Product successfully created.</response>
+        /// <response code="400">Bad request.</response>
         [HttpPost("{resellerId}")]
         public async Task<IActionResult> Index([FromRoute] Guid resellerId, [FromBody] NewProductRequest request)
         {
@@ -35,12 +35,12 @@ namespace Bff.Controllers
         }
 
         /// <summary>
-        /// Lista todos os produtos de um revendedor.
+        /// Lists all products of a reseller.
         /// </summary>
-        /// <param name="resellerId">ID do revendedor.</param>
-        /// <returns>Lista de produtos.</returns>
-        /// <response code="200">Lista retornada com sucesso.</response>
-        /// <response code="404">Revendedor não encontrado.</response>
+        /// <param name="resellerId">Reseller ID.</param>
+        /// <returns>List of products.</returns>
+        /// <response code="200">List successfully returned.</response>
+        /// <response code="404">Reseller not found.</response>
         [HttpGet("{resellerId}")]
         public async Task<IActionResult> Index([FromRoute] Guid resellerId)
         {
@@ -50,13 +50,13 @@ namespace Bff.Controllers
         }
 
         /// <summary>
-        /// Obtém os detalhes de um produto específico.
+        /// Retrieves the details of a specific product.
         /// </summary>
-        /// <param name="resellerId">ID do revendedor.</param>
-        /// <param name="productId">ID do produto.</param>
-        /// <returns>Detalhes do produto.</returns>
-        /// <response code="200">Produto encontrado.</response>
-        /// <response code="404">Produto não encontrado.</response>
+        /// <param name="resellerId">Reseller ID.</param>
+        /// <param name="productId">Product ID.</param>
+        /// <returns>Product details.</returns>
+        /// <response code="200">Product found.</response>
+        /// <response code="404">Product not found.</response>
         [HttpGet("{resellerId}/{productId}")]
         public async Task<IActionResult> Index([FromRoute] Guid resellerId, [FromRoute] int productId)
         {

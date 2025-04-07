@@ -20,12 +20,12 @@ namespace Bff.Controllers
         }
 
         /// <summary>
-        /// Cria um usuário administrador.
+        /// Creates an administrator user.
         /// </summary>
-        /// <param name="login">Dados do novo usuário.</param>
-        /// <returns>Usuário administrador criado.</returns>
-        /// <response code="201">Usuário criado com sucesso.</response>
-        /// <response code="400">Erro na requisição.</response>
+        /// <param name="login">New user data.</param>
+        /// <returns>Administrator user created.</returns>
+        /// <response code="201">User successfully created.</response>
+        /// <response code="400">Bad request.</response>
         [HttpPost]
         [Route("create-admin")]
         [AllowAnonymous]
@@ -37,17 +37,12 @@ namespace Bff.Controllers
         }
 
         /// <summary>
-        /// Realiza login no sistema.
+        /// Logs into the system.
         /// </summary>
-        /// <param name="login">Credenciais do usuário.</param>
-        /// <returns>Token de acesso.</returns>
-        /// <response code="200">Login realizado com sucesso.</response>
-        /// <response code="401">Credenciais inválidas.</response>
-        /// <summary>
-        /// Used to do login on app
-        /// </summary>
-        /// <returns>Acess token</returns>
-        /// <response code="200">Return acess token to loged user</response>
+        /// <param name="login">User credentials.</param>
+        /// <returns>Access token.</returns>
+        /// <response code="200">Login successful.</response>
+        /// <response code="401">Invalid credentials.</response>
         [HttpPost]
         [Route("login")]
         [AllowAnonymous]
@@ -68,18 +63,13 @@ namespace Bff.Controllers
         }
 
         /// <summary>
-        /// Cria um novo usuário.
+        /// Creates a new user.
         /// </summary>
-        /// <param name="login">Dados do novo usuário.</param>
-        /// <returns>Usuário criado.</returns>
-        /// <response code="201">Usuário criado com sucesso.</response>
-        /// <response code="400">Erro na requisição.</response>
-        /// <response code="403">Usuário não tem permissão para criar usuários.</response>
-        /// <summary>
-        /// Used to create a user
-        /// </summary>
-        /// <returns>Created user</returns>
-        /// <response code="200">Return acess token to loged user</response>
+        /// <param name="login">New user data.</param>
+        /// <returns>User created.</returns>
+        /// <response code="201">User successfully created.</response>
+        /// <response code="400">Bad request.</response>
+        /// <response code="403">User does not have permission to create users.</response>
         [HttpPost]
         [Route("singUp")]
         [Authorize(Roles = nameof(UserProfiles.ADMINISTRATOR))]

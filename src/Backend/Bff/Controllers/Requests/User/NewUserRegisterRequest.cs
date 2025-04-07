@@ -1,17 +1,17 @@
 ﻿namespace Bff.Controllers.Requests.User
 {
     /// <summary>
-    /// Dto for new user on systema
+    /// DTO for registering a new user in the system.
     /// </summary>
     public class NewUserRegisterRequest
     {
         /// <summary>
-        /// User`s email
+        /// The email of the user.
         /// </summary>
         public required string Email { get; set; }
 
         /// <summary>
-        /// User`s Password
+        /// The password of the user.
         /// </summary>
         public required string Password { get; set; }
     }

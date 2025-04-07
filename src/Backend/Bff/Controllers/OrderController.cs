@@ -19,14 +19,14 @@ namespace Bff.Controllers
         }
 
         /// <summary>
-        /// Cria um novo pedido para um revendedor.
+        /// Creates a new order for a reseller.
         /// </summary>
-        /// <param name="request">Detalhes do pedido.</param>
-        /// <param name="resellerId">ID do revendedor.</param>
-        /// <returns>O pedido criado.</returns>
-        /// <response code="201">Pedido criado com sucesso.</response>
-        /// <response code="400">Erro na requisição.</response>
-        /// <response code="401">Usuário não autorizado.</response>
+        /// <param name="request">Order details.</param>
+        /// <param name="resellerId">Reseller ID.</param>
+        /// <returns>The created order.</returns>
+        /// <response code="201">Order successfully created.</response>
+        /// <response code="400">Bad request.</response>
+        /// <response code="401">Unauthorized user.</response>
         [HttpPost("{resellerId}")]
         public async Task<IActionResult> Index([FromBody] NewOrderRequest request, [FromRoute] Guid resellerId)
         {
