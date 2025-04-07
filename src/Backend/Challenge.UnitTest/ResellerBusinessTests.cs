@@ -1,26 +1,17 @@
-using Challenge.Application.Business;
-using Challenge.Domain.Business;
 using Challenge.Domain.Entities;
-using Challenge.Domain.Repositories;
-using Microsoft.Extensions.Logging;
+using Challenge.UnitTest.Fixtures;
 using Moq;
+using Xunit;
 
 namespace Challenge.UnitTest
 {
-    public class ResellerBusinessTests
+    public class ResellerBusinessTests : IClassFixture<ResellerBusinessFixture>
     {
-        private readonly Mock<IResellerRepository> _resellerRepositoryMock = new();
-        private readonly Mock<IUserBusiness> _userBusinessMock = new();
-        private readonly Mock<ILogger<ResellerBusiness>> _loggerMock = new();
-        private readonly ResellerBusiness _resellerBusiness;
+        private readonly ResellerBusinessFixture _fixture;
 
-        public ResellerBusinessTests()
+        public ResellerBusinessTests(ResellerBusinessFixture fixture)
         {
-            _resellerBusiness = new ResellerBusiness(
-                _loggerMock.Object,
-                _resellerRepositoryMock.Object,
-                _userBusinessMock.Object
-            );
+            _fixture = fixture;
         }
 
         [Fact]
@@ -36,16 +27,16 @@ namespace Challenge.UnitTest
                 Addresses = new List<Address>()
             };
 
-            _resellerRepositoryMock
+            _fixture.ResellerRepositoryMock
                 .Setup(r => r.SaveResellerAsync(reseller))
                 .ReturnsAsync(reseller);
 
             // Act
-            var result = await _resellerBusiness.SaveResellerAsync(reseller);
+            var result = await _fixture.ResellerBusiness.SaveResellerAsync(reseller);
 
             // Assert
             Assert.NotNull(result);
-            _resellerRepositoryMock.Verify(r => r.SaveResellerAsync(reseller), Times.Once);
+            _fixture.ResellerRepositoryMock.Verify(r => r.SaveResellerAsync(reseller), Times.Once);
         }
     }
 }

@@ -1,27 +1,18 @@
 using Challenge.Application.Business;
-using Challenge.Common.Interfaces;
 using Challenge.Domain.Entities;
-using Challenge.Domain.Repositories;
+using Challenge.UnitTest.Fixtures;
 using Moq;
+using Xunit;
 
 namespace Challenge.UnitTest
 {
-    public class OrderBusinessTests
+    public class OrderBusinessTests : IClassFixture<OrderBusinessFixture>
     {
-        private readonly Mock<IOrderRepository> _orderRepositoryMock = new();
-        private readonly Mock<IResellerRepository> _resellerRepositoryMock = new();
-        private readonly Mock<IProductRepository> _productRepositoryMock = new();
-        private readonly Mock<IMessageService> _messageServiceMock = new();
-        private readonly OrderBusiness _orderBusiness;
+        private readonly OrderBusinessFixture _fixture;
 
-        public OrderBusinessTests()
+        public OrderBusinessTests(OrderBusinessFixture fixture)
         {
-            _orderBusiness = new OrderBusiness(
-                _orderRepositoryMock.Object,
-                _resellerRepositoryMock.Object,
-                _productRepositoryMock.Object,
-                _messageServiceMock.Object
-            );
+            _fixture = fixture;
         }
 
         [Fact]
@@ -53,7 +44,7 @@ namespace Challenge.UnitTest
                 }
             };
 
-            _resellerRepositoryMock
+            _fixture.ResellerRepositoryMock
                 .Setup(r => r.GetResellerByIdAsync(resellerId, false))
                 .ReturnsAsync(new Reseller
                 {
@@ -65,7 +56,7 @@ namespace Challenge.UnitTest
                     Addresses = new List<Address>()
                 });
 
-            _productRepositoryMock
+            _fixture.ProductRepositoryMock
                 .Setup(p => p.GetProductAsync(resellerId, 1, true))
                 .ReturnsAsync(new Product
                 {
@@ -83,7 +74,7 @@ namespace Challenge.UnitTest
                     }
                 });
 
-            _orderRepositoryMock
+            _fixture.OrderRepositoryMock
                 .Setup(o => o.SaveOrderAsync(It.IsAny<Order>()))
                 .ReturnsAsync(new Order
                 {
@@ -103,11 +94,11 @@ namespace Challenge.UnitTest
                 });
 
             // Act
-            var result = await _orderBusiness.SaveOrderAsync(orderDetails, resellerId, userId);
+            var result = await _fixture.OrderBusiness.SaveOrderAsync(orderDetails, resellerId, userId);
 
             // Assert
             Assert.NotNull(result);
-            _orderRepositoryMock.Verify(o => o.SaveOrderAsync(It.IsAny<Order>()), Times.Once);
+            _fixture.OrderRepositoryMock.Verify(o => o.SaveOrderAsync(It.IsAny<Order>()), Times.Once);
         }
     }
 }

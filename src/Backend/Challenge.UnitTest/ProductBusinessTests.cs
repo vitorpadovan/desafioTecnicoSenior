@@ -1,22 +1,17 @@
-using Challenge.Application.Business;
 using Challenge.Domain.Entities;
-using Challenge.Domain.Repositories;
+using Challenge.UnitTest.Fixtures;
 using Moq;
+using Xunit;
 
 namespace Challenge.UnitTest
 {
-    public class ProductBusinessTests
+    public class ProductBusinessTests : IClassFixture<ProductBusinessFixture>
     {
-        private readonly Mock<IProductRepository> _productRepositoryMock = new();
-        private readonly Mock<IResellerRepository> _resellerRepositoryMock = new();
-        private readonly ProductBusiness _productBusiness;
+        private readonly ProductBusinessFixture _fixture;
 
-        public ProductBusinessTests()
+        public ProductBusinessTests(ProductBusinessFixture fixture)
         {
-            _productBusiness = new ProductBusiness(
-                _productRepositoryMock.Object,
-                _resellerRepositoryMock.Object
-            );
+            _fixture = fixture;
         }
 
         [Fact]
@@ -39,7 +34,7 @@ namespace Challenge.UnitTest
                 }
             };
 
-            _resellerRepositoryMock
+            _fixture.ResellerRepositoryMock
                 .Setup(r => r.GetResellerByIdAsync(resellerId, false))
                 .ReturnsAsync(new Reseller
                 {
@@ -51,16 +46,16 @@ namespace Challenge.UnitTest
                     Addresses = new List<Address>()
                 });
 
-            _productRepositoryMock
+            _fixture.ProductRepositoryMock
                 .Setup(p => p.SaveProductAsync(product))
                 .ReturnsAsync(product);
 
             // Act
-            var result = await _productBusiness.SaveProductAsync(resellerId, product);
+            var result = await _fixture.ProductBusiness.SaveProductAsync(resellerId, product);
 
             // Assert
             Assert.NotNull(result);
-            _productRepositoryMock.Verify(p => p.SaveProductAsync(product), Times.Once);
+            _fixture.ProductRepositoryMock.Verify(p => p.SaveProductAsync(product), Times.Once);
         }
     }
 }
