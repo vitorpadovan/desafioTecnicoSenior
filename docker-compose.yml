@@ -4,10 +4,10 @@ services:
     container_name: postgreschalange
     restart: always
     environment:
-      - 'POSTGRES_USER=challenge'
-      - 'POSTGRES_PASSWORD=Senh@123'
-      - 'POSTGRES_DB=challenge'
-      - 'PGDATA=/var/lib/postgresql/data/pgdata'
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - PGDATA=${PGDATA}
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready" ]
       interval: 5s
@@ -27,9 +27,9 @@ services:
     ports:  
       - '8080:8080'
     environment:
-      - 'ASPNETCORE_ENVIRONMENT=Development'
-      - 'ConnectionStrings__RabbitMq=amqp://guest:guest@rabbitmqchsrv:5672'
-      - 'ConnectionStrings__PostgresSqlConnectionString=Host=postgrechalangesrv;Port=5432;Username=challenge;Password=Senh@123;Database=challenge;Pooling=true;'
+      - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
+      - ConnectionStrings__RabbitMq=${RABBITMQ_CONNECTION}
+      - ConnectionStrings__PostgresSqlConnectionString=${POSTGRES_CONNECTION_STRING}
     volumes:
       - './nuget_offline_packages/packages:/root/.nuget/packages:rw'
   frontend:
@@ -39,9 +39,9 @@ services:
     ports:
       - '3000:3000'
     environment:
-      - NEXTAUTH_URL=http://192.168.68.54:3000
-      - NEXTAUTH_SECRET=4b8e2f9c3d7a6e1f0a9b4c2d8e7f1a3c6d9e0b5f2a8c4d7e1f3a6b9c2d8e0f1
-      - NEXT_PUBLIC_API_URL=http://192.168.68.54:8080
+      - NEXTAUTH_URL=${NEXTAUTH_URL}
+      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
+      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
     depends_on:
       - bff
   rabbitmqchsrv:
@@ -75,12 +75,12 @@ services:
       rabbitmqchsrv:
         condition: service_healthy
     environment:
-      - 'ASPNETCORE_ENVIRONMENT=Development'
-      - 'ConnectionStrings__RabbitMq=amqp://guest:guest@rabbitmqchsrv:5672'
-      - 'ConnectionStrings__RedisServer=redischsrv:6379'
-      - 'ConnectionStrings__PostgresSqlConnectionString=Host=postgrechalangesrv;Port=5432;Username=challenge;Password=Senh@123;Database=challenge;Pooling=true;'
-      - 'AzureWebJobsStorage='
-      - 'FUNCTIONS_WORKER_RUNTIME=dotnet-isolated'
+      - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
+      - ConnectionStrings__RabbitMq=${RABBITMQ_CONNECTION}
+      - ConnectionStrings__RedisServer=${REDIS_CONNECTION}
+      - ConnectionStrings__PostgresSqlConnectionString=${POSTGRES_CONNECTION_STRING}
+      - AzureWebJobsStorage=${AZURE_STORAGE}
+      - FUNCTIONS_WORKER_RUNTIME=${FUNCTIONS_WORKER_RUNTIME}
   sendtofabric:
     image: ${DOCKER_REGISTRY-}sendtofabric
     build:
@@ -94,12 +94,12 @@ services:
       rabbitmqchsrv:
         condition: service_healthy
     environment:
-      - 'ASPNETCORE_ENVIRONMENT=Development'
-      - 'ConnectionStrings__RabbitMq=amqp://guest:guest@rabbitmqchsrv:5672'
-      - 'ConnectionStrings__RedisServer=redischsrv:6379'
-      - 'ConnectionStrings__PostgresSqlConnectionString=Host=postgrechalangesrv;Port=5432;Username=challenge;Password=Senh@123;Database=challenge;Pooling=true;'
-      - 'AzureWebJobsStorage='
-      - 'FUNCTIONS_WORKER_RUNTIME=dotnet-isolated'
-      - 'ServiceUrl=https://example.com/api'
-      - 'ServiceUser=admin'
-      - 'ServicePassword=password123'
+      - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
+      - ConnectionStrings__RabbitMq=${RABBITMQ_CONNECTION}
+      - ConnectionStrings__RedisServer=${REDIS_CONNECTION}
+      - ConnectionStrings__PostgresSqlConnectionString=${POSTGRES_CONNECTION_STRING}
+      - AzureWebJobsStorage=${AZURE_STORAGE}
+      - FUNCTIONS_WORKER_RUNTIME=${FUNCTIONS_WORKER_RUNTIME}
+      - ServiceUrl=${SERVICE_URL}
+      - ServiceUser=${SERVICE_USER}
+      - ServicePassword=${SERVICE_PASSWORD}
