@@ -17,7 +17,7 @@ namespace Bff.Controllers.Filters
         
         public void OnActionExecuted(ActionExecutedContext context)
         {
-            if(context.Exception != null && context.Exception is NotFoundExceptions)
+            if(context.Exception != null && context.Exception is NotFoundException)
             {
                 context.Result = new NotFoundResult();
                 context.ExceptionHandled = true;
