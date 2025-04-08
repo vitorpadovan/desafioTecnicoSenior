@@ -1,4 +1,5 @@
 ﻿using Challenge.Domain.Entities;
+using Challenge.Domain.Exceptions;
 using Challenge.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -11,12 +12,14 @@ namespace Challenge.Orm.Repositories
         {
         }
 
-        public Task<Reseller> GetResellerByIdAsync(Guid id, bool AsNonTrack = true)
+        public async Task<Reseller> GetResellerByIdAsync(Guid id, bool AsNonTrack = true)
         {
             var query = _dbSet.Where(x => x.Id == id);
             if (AsNonTrack)
                 query = query.AsNoTracking();
-            return query.FirstAsync();
+            if (!await query.AnyAsync())
+                throw new NotFoundException($"Reseller {id} not found");
+            return await query.FirstAsync();
         }
 
         public Task<List<Reseller>> GetResellersAsync(bool AsNonTrack = true)
