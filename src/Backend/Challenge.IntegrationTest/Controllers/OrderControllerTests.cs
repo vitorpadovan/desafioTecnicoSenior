@@ -1,6 +1,6 @@
-using System.Net;
 using Bff.Controllers.Requests.Order;
 using Bogus;
+using System.Net;
 
 namespace Challenge.IntegrationTest.Controllers
 {
@@ -24,10 +24,10 @@ namespace Challenge.IntegrationTest.Controllers
             {
                 OrderDetails = new List<NewOrderDetailRequest>
                 {
-                    new NewOrderDetailRequest 
-                    { 
-                        ProductId = _faker.Random.Int(1, 100), 
-                        Quantity = _faker.Random.Int(1, 10) 
+                    new NewOrderDetailRequest
+                    {
+                        ProductId = _faker.Random.Int(1, 100),
+                        Quantity = _faker.Random.Int(1, 10)
                     }
                 }
             };

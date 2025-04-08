@@ -1,5 +1,4 @@
-﻿using Bff; // Certifique-se de que o namespace correto está sendo importado
-using Bff.Controllers.Filters;
+﻿using Bff.Controllers.Filters;
 using Bff.Extensions;
 using Bff.Middleware;
 using Challenge.Orm;
@@ -7,7 +6,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.VisualStudio.TestPlatform.TestHost;
 using System.Text;
 
 namespace Challenge.IntegrationTest

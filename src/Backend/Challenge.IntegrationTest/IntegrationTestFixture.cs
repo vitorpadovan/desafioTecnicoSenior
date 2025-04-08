@@ -1,15 +1,4 @@
-using Bff.Controllers.Filters;
-using Bff.Extensions;
 using Challenge.Orm;
-using DotNet.Testcontainers.Builders;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.VisualStudio.TestPlatform.TestHost;
-using System.Text;
 using Testcontainers.PostgreSql;
 
 

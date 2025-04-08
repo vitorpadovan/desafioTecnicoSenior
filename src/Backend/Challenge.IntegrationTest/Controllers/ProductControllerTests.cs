@@ -1,9 +1,9 @@
-using System.Net;
 using Bff.Controllers.Requests.Product;
 using Bff.Controllers.Requests.Reseller;
 using Bff.Controllers.Response.Reseller;
 using Bogus;
 using Bogus.Extensions.Brazil;
+using System.Net;
 
 namespace Challenge.IntegrationTest.Controllers
 {

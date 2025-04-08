@@ -1,9 +1,7 @@
-using Challenge.Application.Business;
+using Bogus;
 using Challenge.Domain.Entities;
 using Challenge.UnitTest.Fixtures;
 using Moq;
-using Xunit;
-using Bogus;
 
 namespace Challenge.UnitTest
 {
