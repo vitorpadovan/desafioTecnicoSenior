@@ -1,5 +1,10 @@
+using Bff.Controllers.Requests.User;
+using Bogus;
 using Challenge.Orm;
+using Microsoft.AspNetCore.Authentication.BearerToken;
+using Microsoft.AspNetCore.Identity.Data;
 using Testcontainers.PostgreSql;
+using Testcontainers.RabbitMq;
 
 
 namespace Challenge.IntegrationTest
@@ -10,6 +15,9 @@ namespace Challenge.IntegrationTest
         private readonly AppTesteServer _testeServer;
         private readonly AppDbContext _appDbContext;
         private readonly PostgreSqlContainer _dbContainer;
+        private readonly RabbitMqContainer _rabbitMqContainer;
+        private readonly Faker _faker = new("pt_BR");
+        public readonly NewUserRegisterRequest _adminUser;
 
         public IntegrationTestFixture()
         {
@@ -17,7 +25,11 @@ namespace Challenge.IntegrationTest
                 .WithDatabase("testdb")
                 .WithUsername("postgres")
                 .Build();
+            _rabbitMqContainer = new RabbitMqBuilder()
+                .Build();
             _dbContainer.StartAsync().GetAwaiter().GetResult();
+            _rabbitMqContainer.StartAsync().GetAwaiter().GetResult();
+
             IWebHostBuilder builder = new WebHostBuilder()
                 .UseEnvironment("Testing")
                 .ConfigureAppConfiguration((context, configurationBuilder) =>
@@ -29,7 +41,8 @@ namespace Challenge.IntegrationTest
                         .AddEnvironmentVariables()
                         .AddInMemoryCollection(new Dictionary<string, string>
                         {
-                            { "ConnectionStrings:PostgresSqlConnectionString", _dbContainer.GetConnectionString() }
+                            { "ConnectionStrings:PostgresSqlConnectionString", _dbContainer.GetConnectionString() },
+                            { "ConnectionStrings:RabbitMq", _rabbitMqContainer.GetConnectionString() }
                         });
                 })
                 .UseStartup<StartupApiTests>();
@@ -44,6 +57,29 @@ namespace Challenge.IntegrationTest
                 throw new Exception("Error creating database", ex);
             }
             Client = _testeServer.CreateClient();
+            _adminUser = new()
+            {
+                Email = _faker.Internet.Email(),
+                Password = _faker.Internet.Password()
+            };
+            CreateUser().GetAwaiter().GetResult();
+        }
+
+        private async Task CreateUser()
+        {
+            var response = await Client.PostAsJsonAsync("/api/user/create-admin", _adminUser);
+        }
+
+        public async Task<AccessTokenResponse> LoginAs(NewUserRegisterRequest asd)
+        {
+            var loginRequest = new LoginRequest
+            {
+                Email = asd.Email,
+                Password = asd.Password
+            };
+            var response = await Client.PostAsJsonAsync("/api/user/login", loginRequest);
+            var token = await response.Content.ReadFromJsonAsync<AccessTokenResponse>();
+            return token;
         }
 
         public void Dispose()

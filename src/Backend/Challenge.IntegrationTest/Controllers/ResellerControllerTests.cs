@@ -1,15 +1,18 @@
+using System.Net;
+using System.Net.Http.Json;
 using Bff.Controllers.Requests.Reseller;
 using Bff.Controllers.Response.Reseller;
 using Bogus;
 using Bogus.Extensions.Brazil;
-using System.Net;
+using Challenge.Domain.Entities;
+using Xunit;
 
 namespace Challenge.IntegrationTest.Controllers
 {
     public class ResellerControllerTests : IClassFixture<IntegrationTestFixture>
     {
         private readonly HttpClient _client;
-        private readonly Faker _faker;
+        private readonly Faker _faker; 
 
         public ResellerControllerTests(IntegrationTestFixture fixture)
         {
