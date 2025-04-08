@@ -7,8 +7,10 @@ namespace Challenge.Orm.Repositories
 {
     public class ProductRepository : BasicRepository<Product, ProductRepository>, IProductRepository
     {
-        public ProductRepository(AppDbContext context, ILogger<ProductRepository> logger) : base(context, context.Set<Product>(), logger)
+        private readonly IResellerRepository _resellerRepository;
+        public ProductRepository(AppDbContext context, ILogger<ProductRepository> logger, IResellerRepository resellerRepository) : base(context, context.Set<Product>(), logger)
         {
+            _resellerRepository = resellerRepository;
         }
 
         public Task<Product> GetProductAsync(Guid resellerId, int productId, bool AsNonTracking = true)
@@ -27,12 +29,13 @@ namespace Challenge.Orm.Repositories
             return product.First();
         }
 
-        public Task<List<Product>> GetProductsAsync(Guid resellerId, bool AsNonTracking = true)
+        public async Task<List<Product>> GetProductsAsync(Guid resellerId, bool AsNonTracking = true)
         {
+            _ = await _resellerRepository.GetResellerByIdAsync(resellerId);
             var products = _dbSet.Where(x => x.ResellerId == resellerId);
             if (AsNonTracking)
                 products = products.AsNoTracking();
-            return products.ToListAsync();
+            return await products.ToListAsync();
         }
 
         public async Task<Product> SaveProductAsync(Product request)

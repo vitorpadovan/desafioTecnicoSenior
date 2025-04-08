@@ -1,15 +1,18 @@
 using System.Net;
 using Bff.Controllers.Requests.Order;
+using Bogus;
 
 namespace Challenge.IntegrationTest.Controllers
 {
     public class OrderControllerTests : IClassFixture<IntegrationTestFixture>
     {
         private readonly HttpClient _client;
+        private readonly Faker _faker;
 
         public OrderControllerTests(IntegrationTestFixture fixture)
         {
             _client = fixture.Client;
+            _faker = new Faker("pt_BR"); // Configura o Faker para o Brasil
         }
 
         [Fact]
@@ -21,7 +24,11 @@ namespace Challenge.IntegrationTest.Controllers
             {
                 OrderDetails = new List<NewOrderDetailRequest>
                 {
-                    new NewOrderDetailRequest { ProductId = 1, Quantity = 2 }
+                    new NewOrderDetailRequest 
+                    { 
+                        ProductId = _faker.Random.Int(1, 100), 
+                        Quantity = _faker.Random.Int(1, 10) 
+                    }
                 }
             };
 
