@@ -8,6 +8,8 @@ Execute o seguinte comando para iniciar o projeto com todas as dependências con
 docker-compose up -d --build
 ```
 
+> **Nota:** É obrigatório ter o Docker instalado na máquina para executar os testes de integração.
+
 ## Sequência de inicialização
 
 1. Subir o PostgreSQL.
@@ -96,6 +98,7 @@ A documentação completa da API pode ser encontrada no arquivo [`swaggerapi.jso
 3. PostgreSQL
 4. React/Next.js
 5. Polly
+6. Bogus
 
 ## Observações
 
