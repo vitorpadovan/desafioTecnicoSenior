@@ -1,4 +1,5 @@
-﻿using Bff.Controllers.Filters;
+﻿using Bff; // Certifique-se de que o namespace correto está sendo importado
+using Bff.Controllers.Filters;
 using Bff.Extensions;
 using Challenge.Orm;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -23,10 +24,8 @@ namespace Challenge.IntegrationTest
         {
             var connString = _configuration.GetConnectionString("PostgresSqlConnectionString");
             ArgumentNullException.ThrowIfNullOrEmpty(connString, nameof(connString));
-            var tempDb = $"TestDb_{Guid.NewGuid():N}";
-            connString = connString.Replace("{dbName}", tempDb);
             services.AddControllers(options => options.Filters.Add<HttpResponseExceptionFilter>());
-            services.AddAutoMapper(typeof(Program).Assembly);
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies().SingleOrDefault(assembly => assembly.GetName().Name == "Bff"));
             services.AddDbContext<AppDbContext>(options =>
                 options.UseNpgsql(
                     connString,

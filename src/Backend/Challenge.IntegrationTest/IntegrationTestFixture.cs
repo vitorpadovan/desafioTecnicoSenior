@@ -1,6 +1,7 @@
 using Bff.Controllers.Filters;
 using Bff.Extensions;
 using Challenge.Orm;
+using DotNet.Testcontainers.Builders;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -9,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.VisualStudio.TestPlatform.TestHost;
 using System.Text;
+using Testcontainers.PostgreSql;
 
 
 namespace Challenge.IntegrationTest
@@ -18,9 +20,15 @@ namespace Challenge.IntegrationTest
         public HttpClient Client { get; }
         private readonly AppTesteServer _testeServer;
         private readonly AppDbContext _appDbContext;
+        private readonly PostgreSqlContainer _dbContainer;
 
         public IntegrationTestFixture()
         {
+            _dbContainer = new PostgreSqlBuilder()
+                .WithDatabase("testdb")
+                .WithUsername("postgres")
+                .Build();
+            _dbContainer.StartAsync().GetAwaiter().GetResult();
             IWebHostBuilder builder = new WebHostBuilder()
                 .UseEnvironment("Testing")
                 .ConfigureAppConfiguration((context, configurationBuilder) =>
@@ -29,7 +37,11 @@ namespace Challenge.IntegrationTest
                     var appSettings = $"appsettings.{environment}.json";
                     configurationBuilder
                         .AddJsonFile(appSettings, optional: false)
-                        .AddEnvironmentVariables();
+                        .AddEnvironmentVariables()
+                        .AddInMemoryCollection(new Dictionary<string, string>
+                        {
+                            { "ConnectionStrings:PostgresSqlConnectionString", _dbContainer.GetConnectionString() }
+                        });
                 })
                 .UseStartup<StartupApiTests>();
             _testeServer = new AppTesteServer(builder);
