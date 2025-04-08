@@ -93,12 +93,13 @@ A documentação completa da API pode ser encontrada no arquivo [`swaggerapi.jso
 
 ## Tecnologias usadas
 
-1. RabbitMQ
-2. Redis
-3. PostgreSQL
-4. React/Next.js
-5. Polly
-6. Bogus
+1. [RabbitMQ](https://www.rabbitmq.com/)  
+2. [Redis](https://redis.io/)  
+3. [PostgreSQL](https://www.postgresql.org/)  
+4. [React/Next.js](https://nextjs.org/)  
+5. [Polly](https://github.com/App-vNext/Polly)  
+6. [Bogus](https://github.com/bchavez/Bogus)  
+7. [Testcontainers](https://www.testcontainers.org/)  
 
 ## Observações
 
