@@ -2,16 +2,19 @@ using Challenge.Domain.Entities;
 using Challenge.UnitTest.Fixtures;
 using Moq;
 using Xunit;
+using Bogus;
 
 namespace Challenge.UnitTest
 {
     public class ProductBusinessTests : IClassFixture<ProductBusinessFixture>
     {
         private readonly ProductBusinessFixture _fixture;
+        private readonly Faker _faker;
 
         public ProductBusinessTests(ProductBusinessFixture fixture)
         {
             _fixture = fixture;
+            _faker = new Faker();
         }
 
         [Fact]
@@ -21,15 +24,15 @@ namespace Challenge.UnitTest
             var resellerId = Guid.NewGuid();
             var product = new Product
             {
-                Id = 1,
-                Name = "Test Product",
+                Id = _faker.Random.Int(1, 100),
+                Name = _faker.Commerce.ProductName(),
                 Reseller = new Reseller
                 {
                     Id = resellerId,
-                    Document = "123456789",
-                    RegistredName = "Test Reseller",
-                    TradeName = "Test Trade",
-                    Email = "reseller@test.com",
+                    Document = _faker.Random.ReplaceNumbers("#########"),
+                    RegistredName = _faker.Company.CompanyName(),
+                    TradeName = _faker.Company.CompanySuffix(),
+                    Email = _faker.Internet.Email(),
                     Addresses = new List<Address>()
                 }
             };
@@ -39,10 +42,10 @@ namespace Challenge.UnitTest
                 .ReturnsAsync(new Reseller
                 {
                     Id = resellerId,
-                    Document = "123456789",
-                    RegistredName = "Test Reseller",
-                    TradeName = "Test Trade",
-                    Email = "reseller@test.com",
+                    Document = _faker.Random.ReplaceNumbers("#########"),
+                    RegistredName = _faker.Company.CompanyName(),
+                    TradeName = _faker.Company.CompanySuffix(),
+                    Email = _faker.Internet.Email(),
                     Addresses = new List<Address>()
                 });
 

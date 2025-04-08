@@ -3,16 +3,19 @@ using Challenge.Domain.Entities;
 using Challenge.UnitTest.Fixtures;
 using Moq;
 using Xunit;
+using Bogus;
 
 namespace Challenge.UnitTest
 {
     public class OrderBusinessTests : IClassFixture<OrderBusinessFixture>
     {
         private readonly OrderBusinessFixture _fixture;
+        private readonly Faker _faker;
 
         public OrderBusinessTests(OrderBusinessFixture fixture)
         {
             _fixture = fixture;
+            _faker = new Faker();
         }
 
         [Fact]
@@ -27,20 +30,20 @@ namespace Challenge.UnitTest
                 {
                     Product = new Product
                     {
-                        Id = 1,
-                        Name = "Test Product",
-                        Price = 10,
+                        Id = _faker.Random.Int(1, 100),
+                        Name = _faker.Commerce.ProductName(),
+                        Price = _faker.Random.Decimal(1, 100),
                         Reseller = new Reseller
                         {
                             Id = resellerId,
-                            Document = "123456789",
-                            RegistredName = "Test Reseller",
-                            TradeName = "Test Trade",
-                            Email = "reseller@test.com",
+                            Document = _faker.Random.ReplaceNumbers("#########"),
+                            RegistredName = _faker.Company.CompanyName(),
+                            TradeName = _faker.Company.CompanySuffix(),
+                            Email = _faker.Internet.Email(),
                             Addresses = new List<Address>()
                         }
                     },
-                    Quantity = 2
+                    Quantity = _faker.Random.Int(1, 10)
                 }
             };
 
@@ -49,27 +52,27 @@ namespace Challenge.UnitTest
                 .ReturnsAsync(new Reseller
                 {
                     Id = resellerId,
-                    Document = "123456789",
-                    RegistredName = "Test Reseller",
-                    TradeName = "Test Trade",
-                    Email = "reseller@test.com",
+                    Document = _faker.Random.ReplaceNumbers("#########"),
+                    RegistredName = _faker.Company.CompanyName(),
+                    TradeName = _faker.Company.CompanySuffix(),
+                    Email = _faker.Internet.Email(),
                     Addresses = new List<Address>()
                 });
 
             _fixture.ProductRepositoryMock
-                .Setup(p => p.GetProductAsync(resellerId, 1, true))
+                .Setup(p => p.GetProductAsync(resellerId, It.IsAny<int>(), true))
                 .ReturnsAsync(new Product
                 {
-                    Id = 1,
-                    Name = "Test Product",
-                    Price = 10,
+                    Id = _faker.Random.Int(1, 100),
+                    Name = _faker.Commerce.ProductName(),
+                    Price = _faker.Random.Decimal(1, 100),
                     Reseller = new Reseller
                     {
                         Id = resellerId,
-                        Document = "123456789",
-                        RegistredName = "Test Reseller",
-                        TradeName = "Test Trade",
-                        Email = "reseller@test.com",
+                        Document = _faker.Random.ReplaceNumbers("#########"),
+                        RegistredName = _faker.Company.CompanyName(),
+                        TradeName = _faker.Company.CompanySuffix(),
+                        Email = _faker.Internet.Email(),
                         Addresses = new List<Address>()
                     }
                 });
@@ -78,18 +81,18 @@ namespace Challenge.UnitTest
                 .Setup(o => o.SaveOrderAsync(It.IsAny<Order>()))
                 .ReturnsAsync(new Order
                 {
-                    Id = 1,
+                    Id = _faker.Random.Int(1, 100),
                     Reseller = new Reseller
                     {
                         Id = resellerId,
-                        Document = "123456789",
-                        RegistredName = "Test Reseller",
-                        TradeName = "Test Trade",
-                        Email = "reseller@test.com",
+                        Document = _faker.Random.ReplaceNumbers("#########"),
+                        RegistredName = _faker.Company.CompanyName(),
+                        TradeName = _faker.Company.CompanySuffix(),
+                        Email = _faker.Internet.Email(),
                         Addresses = new List<Address>()
                     },
                     ClientUserId = userId,
-                    Total = 20,
+                    Total = _faker.Random.Decimal(10, 1000),
                     RecivedAt = DateTime.UtcNow
                 });
 
