@@ -33,7 +33,7 @@ namespace Challenge.Application
             var claim = _httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email);
             var @return = await _userManager.FindByEmailAsync(claim!.Value);
             if (@return == null)
-                throw new NotFoundExceptions("Não foram encontrados usuários para este token");
+                throw new NotFoundException("Não foram encontrados usuários para este token");
             return @return!;
         }
     }
