@@ -2,16 +2,19 @@ using Challenge.Domain.Entities;
 using Challenge.UnitTest.Fixtures;
 using Moq;
 using Xunit;
+using Bogus;
 
 namespace Challenge.UnitTest
 {
     public class ResellerBusinessTests : IClassFixture<ResellerBusinessFixture>
     {
         private readonly ResellerBusinessFixture _fixture;
+        private readonly Faker _faker;
 
         public ResellerBusinessTests(ResellerBusinessFixture fixture)
         {
             _fixture = fixture;
+            _faker = new Faker();
         }
 
         [Fact]
@@ -20,10 +23,10 @@ namespace Challenge.UnitTest
             // Arrange
             var reseller = new Reseller
             {
-                Document = "123456789",
-                RegistredName = "Test Reseller",
-                TradeName = "Test Trade",
-                Email = "reseller@test.com",
+                Document = _faker.Random.ReplaceNumbers("#########"),
+                RegistredName = _faker.Company.CompanyName(),
+                TradeName = _faker.Company.CompanySuffix(),
+                Email = _faker.Internet.Email(),
                 Addresses = new List<Address>()
             };
 
