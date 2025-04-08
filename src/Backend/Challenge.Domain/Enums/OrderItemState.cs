@@ -10,7 +10,7 @@
         Completed = 5,
         WaintToShipp = 6,
         Shipped = 7,
-        WaintSendToFactory = 8,
+        WaitSendToFactory = 8,
         SendToFactory = 9,
         WaintToRecive = 10,
         Recived = 11,

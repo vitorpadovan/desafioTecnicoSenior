@@ -1,3 +1,4 @@
+using Bogus;
 using Challenge.Domain.Entities;
 using Challenge.UnitTest.Fixtures;
 using Moq;

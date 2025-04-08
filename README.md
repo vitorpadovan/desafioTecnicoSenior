@@ -8,6 +8,8 @@ Execute o seguinte comando para iniciar o projeto com todas as dependências con
 docker-compose up -d --build
 ```
 
+> **Nota:** É obrigatório ter o Docker instalado na máquina para executar os testes de integração.
+
 ## Sequência de inicialização
 
 1. Subir o PostgreSQL.
@@ -91,11 +93,13 @@ A documentação completa da API pode ser encontrada no arquivo [`swaggerapi.jso
 
 ## Tecnologias usadas
 
-1. RabbitMQ
-2. Redis
-3. PostgreSQL
-4. React/Next.js
-5. Polly
+1. [RabbitMQ](https://www.rabbitmq.com/)  
+2. [Redis](https://redis.io/)  
+3. [PostgreSQL](https://www.postgresql.org/)  
+4. [React/Next.js](https://nextjs.org/)  
+5. [Polly](https://github.com/App-vNext/Polly)  
+6. [Bogus](https://github.com/bchavez/Bogus)  
+7. [Testcontainers](https://www.testcontainers.org/)  
 
 ## Observações
 

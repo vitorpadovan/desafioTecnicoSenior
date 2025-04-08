@@ -35,7 +35,7 @@ namespace ProductCounterAzFunction
                 await _cacheService.DeleteCounter(id);
                 var orders = await _appDbContext.Set<OrderDetail>()
                     .Include(x => x.Order)
-                    .Where(x => x.Product.Id == orderDetailItem.ProductId && x.State == OrderItemState.WaintSendToFactory)
+                    .Where(x => x.Product.Id == orderDetailItem.ProductId && x.State == OrderItemState.WaitSendToFactory)
                     .ToListAsync();
                 var dtos = orders.Select(x => new OrderDetailDto()
                 {
@@ -53,7 +53,7 @@ namespace ProductCounterAzFunction
                 var order = await _appDbContext.Set<OrderDetail>()
                     .Where(x => x.Product.Id == orderDetailItem.ProductId && x.Order.Id == orderDetailItem.OrderId)
                     .FirstAsync();
-                order.State = OrderItemState.WaintSendToFactory;
+                order.State = OrderItemState.WaitSendToFactory;
                 await _appDbContext.SaveChangesAsync();
                 _logger.LogInformation("Aguardando para fazer o pedido do product {Id} is {Quantity}", id, total);
             }
