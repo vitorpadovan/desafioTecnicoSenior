@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Challenge.IntegrationTest": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:64317;http://localhost:64318"
+    }
+  }
+}
