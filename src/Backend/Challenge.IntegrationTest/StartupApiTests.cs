@@ -1,6 +1,7 @@
 ﻿using Bff; // Certifique-se de que o namespace correto está sendo importado
 using Bff.Controllers.Filters;
 using Bff.Extensions;
+using Bff.Middleware;
 using Challenge.Orm;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -94,6 +95,7 @@ namespace Challenge.IntegrationTest
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseMiddleware<LogScopeMiddleware>();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

@@ -1,6 +1,10 @@
 using System.Net;
 using System.Net.Http.Json;
 using Bff.Controllers.Requests.Reseller;
+using Bff.Controllers.Response.Reseller;
+using Bogus;
+using Bogus.Extensions.Brazil;
+using Challenge.Domain.Entities;
 using Xunit;
 
 namespace Challenge.IntegrationTest.Controllers
@@ -8,10 +12,12 @@ namespace Challenge.IntegrationTest.Controllers
     public class ResellerControllerTests : IClassFixture<IntegrationTestFixture>
     {
         private readonly HttpClient _client;
+        private readonly Faker _faker; 
 
         public ResellerControllerTests(IntegrationTestFixture fixture)
         {
             _client = fixture.Client;
+            _faker = new Faker();
         }
 
         [Fact]
@@ -20,7 +26,7 @@ namespace Challenge.IntegrationTest.Controllers
             // Arrange
             var request = new NewResellerRequest
             {
-                Document = "77.034.148/0001-71",
+                Document = _faker.Company.Cnpj(includeFormatSymbols: true),
                 RegistredName = "Test Reseller",
                 TradeName = "Test Trade",
                 Email = "test@example.com",
@@ -46,7 +52,7 @@ namespace Challenge.IntegrationTest.Controllers
         }
 
         [Fact]
-        public async Task GetReseller_ShouldReturnOk()
+        public async Task GetReseller_ShouldReturnNotFound()
         {
             // Arrange
             var resellerId = Guid.NewGuid();
@@ -55,6 +61,40 @@ namespace Challenge.IntegrationTest.Controllers
             var response = await _client.GetAsync($"/api/reseller/{resellerId}");
 
             // Assert
+            Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task GetReseller_ShouldReturnOkAndReseller()
+        {
+            // Arrange
+            var request = new NewResellerRequest
+            {
+                Document = _faker.Company.Cnpj(includeFormatSymbols: true),
+                RegistredName = "Test Reseller",
+                TradeName = "Test Trade",
+                Email = "test@example.com",
+                Addresses = new List<AddressRequest>
+                {
+                    new AddressRequest
+                    {
+                        City = "Test City",
+                        Province = "Test Province",
+                        Street = "Test Street",
+                        Number = 123,
+                        PostalCode = 123123,
+                        Country = "Test Country"
+                    }
+                }
+            };
+            var createResponse = await _client.PostAsJsonAsync("/api/reseller", request);
+            var ResellerResponse = await createResponse.Content.ReadFromJsonAsync<ResellerResponse>();
+
+            // Act
+            var response = await _client.GetAsync($"/api/reseller/{ResellerResponse!.Id}");
+
+            // Assert
+            Assert.Equal(HttpStatusCode.Created, createResponse.StatusCode);
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
     }
