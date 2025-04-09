@@ -8,12 +8,9 @@ namespace Challenge.Domain.Entities
     public class Product
     {
         [Column("id")]
-        [BsonId] // Chave primária
-        [BsonRepresentation(BsonType.ObjectId)]
         public int Id { get; set; }
 
         [Column("name")]
-        [BsonElement("name")] // Nome do campo no MongoDB
         public required string Name { get; set; } = string.Empty;
 
         [Column("description")]
