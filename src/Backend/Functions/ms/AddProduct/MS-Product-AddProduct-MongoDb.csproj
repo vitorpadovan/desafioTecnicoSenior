@@ -5,6 +5,7 @@
     <OutputType>Exe</OutputType>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+	<RootNamespace>AddProduct_MongoDb</RootNamespace>
     <DockerFastModeProjectMountDirectory>/home/site/wwwroot</DockerFastModeProjectMountDirectory>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>..\..\..</DockerfileContext>
@@ -21,7 +22,6 @@
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Challenge.Domain\Challenge.Domain.csproj" />
     <ProjectReference Include="..\..\..\Challenge.Orm\Challenge.Orm.csproj" />
   </ItemGroup>
   <ItemGroup>
