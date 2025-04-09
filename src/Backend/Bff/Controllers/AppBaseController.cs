@@ -21,7 +21,7 @@ namespace Bff.Controllers
         protected Uri GetBaseUri(string append)
         {
             var baseUri = $"{Request.Scheme}://{Request.Host}{Request.Path}/{append}";
-            _logger.LogDebug($"Base URI: {baseUri}");
+            _logger.LogDebug("Base URI:{baseUri}", baseUri);
             return new Uri(baseUri);
         }
         protected Uri GetBaseUri(int append)
