@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using MongoDB.Driver;
 using System.Reflection;
 using System.Text;
 
@@ -23,6 +24,10 @@ builder.Services.AddSwaggerGen(c =>
     var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
 });
+builder.Services.Configure<MongoDbSettings>(
+    builder.Configuration.GetSection("MongoDbSettings"));
+builder.Services.AddSingleton<IMongoClient>(
+    s => new MongoClient(builder.Configuration.GetSection("MongoDbSettings")["ConnectionString"]));
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(
@@ -124,5 +129,7 @@ using (var scope = app.Services.CreateScope())
     var rabbitMq = scope.ServiceProvider.GetRequiredService<IMessageService>();
     rabbitMq.InitQueueAsync("order-recived").Wait();
     rabbitMq.InitQueueAsync("request_to_fabric").Wait();
+    rabbitMq.InitQueueAsync("add_product_mongo", "add_product", "add_product").Wait();
+    rabbitMq.InitQueueAsync("add_product_postgres", "add_product", "add_product").Wait();
 }
 app.Run();

@@ -52,7 +52,7 @@ namespace Challenge.Common.Implementation
             }
         }
 
-        public async Task PublishAsync<T>(T message, string queue = "default", string routingKey = "default", bool forceRoutingKey = false)
+        public async Task PublishAsync<T>(T message, string queue = "default", string routingKey = "default", string? exchange = null)
         {
             var channel = await GetOrCreateChannelAsync();
 
@@ -69,13 +69,13 @@ namespace Challenge.Common.Implementation
                 var body = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(message));
 
                 await channel.BasicPublishAsync(
-                    exchange: "",
-                    routingKey: forceRoutingKey ? routingKey : queue,
+                    exchange: exchange ?? string.Empty,
+                    routingKey: exchange != null ? routingKey : queue,
                     mandatory: true,
                     body: body
                 );
 
-                //_logger.LogInformation("Mensagem publicada com sucesso na fila '{Queue}'", queue);
+                _logger.LogInformation("Mensagem publicada com sucesso na fila '{Queue}'", queue);
             }
             catch (Exception ex)
             {
@@ -119,10 +119,9 @@ namespace Challenge.Common.Implementation
             _connection.Dispose();
         }
 
-        public async Task InitQueueAsync(string queue = "default")
+        public async Task InitQueueAsync(string queue = "default", string? exchange = null, string routingKey = "")
         {
             var channel = await GetOrCreateChannelAsync();
-
             try
             {
                 await channel.QueueDeclareAsync(
@@ -133,7 +132,26 @@ namespace Challenge.Common.Implementation
                     arguments: null
                 );
 
-                _logger.LogInformation("Fila '{Queue}' criada com sucesso.", queue);
+                if (!string.IsNullOrEmpty(exchange))
+                {
+                    await channel.ExchangeDeclareAsync(
+                        exchange: exchange,
+                        type: ExchangeType.Direct,
+                        durable: true
+                    );
+
+                    await channel.QueueBindAsync(
+                        queue: queue,
+                        exchange: exchange,
+                        routingKey: routingKey
+                    );
+
+                    _logger.LogInformation("Fila '{Queue}' criada e vinculada à exchange '{Exchange}' com a routing key '{RoutingKey}'.", queue, exchange, routingKey);
+                }
+                else
+                {
+                    _logger.LogInformation("Fila '{Queue}' criada com sucesso.", queue);
+                }
             }
             catch (Exception ex)
             {
