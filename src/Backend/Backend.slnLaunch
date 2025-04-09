@@ -1,0 +1,63 @@
+[
+  {
+    "Name": "Backend Only",
+    "Projects": [
+      {
+        "Path": "Bff\\Bff.csproj",
+        "Action": "Start",
+        "DebugTarget": "http"
+      }
+    ]
+  },
+  {
+    "Name": "Backend + AzFunctions",
+    "Projects": [
+      {
+        "Path": "Bff\\Bff.csproj",
+        "Action": "Start",
+        "DebugTarget": "http"
+      },
+      {
+        "Path": "Functions\\ProductCounterAzFunction\\ProductCounterAzFunction.csproj",
+        "Action": "Start",
+        "DebugTarget": "ProductCounterAzFunction"
+      },
+      {
+        "Path": "Functions\\SendToFabric\\SendToFabric.csproj",
+        "Action": "Start",
+        "DebugTarget": "SendToFabric"
+      },
+      {
+        "Path": "Functions\\ms\\AddProduct\\MS-Product-AddProduct-MongoDb.csproj",
+        "Action": "Start",
+        "DebugTarget": "AddProduct"
+      },
+      {
+        "Path": "Functions\\ms\\AddProduct-Postgres\\MS-Product-AddProduct-Postgres.csproj",
+        "Action": "Start",
+        "DebugTarget": "AddProduct_Postgres"
+      }
+    ]
+  },
+  {
+    "Name": "Bacnend + Ms Product",
+    "Projects": [
+      {
+        "Path": "Bff\\Bff.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "Functions\\ms\\AddProduct\\MS-Product-AddProduct-MongoDb.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "Functions\\ms\\AddProduct-Postgres\\MS-Product-AddProduct-Postgres.csproj",
+        "Action": "Start"
+      }
+    ]
+  },
+  {
+    "Name": "Backend + Mongo",
+    "Projects": []
+  }
+]
