@@ -2,7 +2,7 @@
 {
     public interface IMessageService
     {
-        Task PublishAsync<T>(T v, string queue = "default", string routingKey = "default", bool forceRoutingKey = false);
-        Task InitQueueAsync(string queue = "default");
+        Task PublishAsync<T>(T v, string queue = "default", string routingKey = "default", string? exchange = null);
+        Task InitQueueAsync(string queue = "default", string? exchange = null, string routingKey = "");
     }
 }

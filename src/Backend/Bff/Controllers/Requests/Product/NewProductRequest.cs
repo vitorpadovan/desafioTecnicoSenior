@@ -22,5 +22,7 @@ namespace Bff.Controllers.Requests.Product
         /// </summary>
         [Range(0.01, double.MaxValue, ErrorMessage = "The price must be at least 0.01.")]
         public required decimal Price { get; set; }
+
+        public int Stock { get; set; } = 0;
     }
 }
