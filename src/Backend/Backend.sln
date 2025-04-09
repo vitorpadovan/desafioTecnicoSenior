@@ -39,6 +39,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MicroServices", "MicroServi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MS-Product-AddProduct-Postgres", "Functions\ms\AddProduct-Postgres\MS-Product-AddProduct-Postgres.csproj", "{84995D4C-86FB-4F94-853F-5877D6D6B39F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Challenge.DataCache", "..\Challenge.DataCache\Challenge.DataCache.csproj", "{74CC85B2-3373-4293-826E-41757BBA5C32}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -97,6 +99,10 @@ Global
 		{84995D4C-86FB-4F94-853F-5877D6D6B39F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{84995D4C-86FB-4F94-853F-5877D6D6B39F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{84995D4C-86FB-4F94-853F-5877D6D6B39F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74CC85B2-3373-4293-826E-41757BBA5C32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74CC85B2-3373-4293-826E-41757BBA5C32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74CC85B2-3373-4293-826E-41757BBA5C32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74CC85B2-3373-4293-826E-41757BBA5C32}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
