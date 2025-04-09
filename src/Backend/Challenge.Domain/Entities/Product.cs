@@ -19,6 +19,15 @@ namespace Challenge.Domain.Entities
         [Column("resellerid")]
         public Guid ResellerId { get; set; }
 
+        [Column("stock")]
+        public int Stock { get; set; } = 0;
+        
+        [Column("reservedstock")]
+        public int ReservedStock { get; set; } = 0;
+
+        [Column("isactive")]
+        public bool IsActive { get; set; } = true;
+
         public required Reseller Reseller { get; set; }
     }
 }
