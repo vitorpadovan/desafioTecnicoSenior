@@ -11,16 +11,17 @@ namespace Challenge.Application.Services
     public class TokenService : ITokenService
     {
         private readonly IConfiguration _config;
+        private readonly string? authKey;
 
         public TokenService(IConfiguration config)
         {
             _config = config;
+            authKey = Environment.GetEnvironmentVariable("authKey") ??  throw new ApplicationException("JWT key is not configured.");
         }
 
         public string GenerateToken(IdentityUser user, ClaimsPrincipal claims)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var authKey = _config["authKey"]!;
             var key = Encoding.ASCII.GetBytes(authKey);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
