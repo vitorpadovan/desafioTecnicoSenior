@@ -1,3 +1,5 @@
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=vitorpadovan_desafioTecnicoSenior&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=vitorpadovan_desafioTecnicoSenior)
+
 # Desafio Técnico Senior
 
 ## Como iniciar o projeto
